@@ -4,24 +4,41 @@ from django.db import models
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
     
-    # --- MISSING FIELD ADDED HERE ---
-    full_name = models.CharField(max_length=255, blank=True, default='') 
+    # --- MANDATORY FIELDS ---
+    # We set blank=False and null=False to ensure these are never empty
+    email = models.EmailField(unique=True, blank=False, null=False)
+    first_name = models.CharField(max_length=150, blank=False, null=False)
+    last_name = models.CharField(max_length=150, blank=False, null=False)
+    phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False)
     
+    # Roles
     is_active_seller = models.BooleanField(default=False)
     is_active_broker = models.BooleanField(default=False)
-    
+     
     # OTP Fields
     otp = models.CharField(max_length=6, blank=True, null=True)
     otp_created_at = models.DateTimeField(blank=True, null=True)
 
+    # Authentication Configuration
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username'] # 'full_name' is not required for admin creation, but required for app usage
+    # These fields are required when running 'python manage.py createsuperuser'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
 
-    groups = models.ManyToManyField('auth.Group', related_name='custom_user_set', blank=True)
-    user_permissions = models.ManyToManyField('auth.Permission', related_name='custom_user_set', blank=True)
+    # Fix for group/permission clashes
+    groups = models.ManyToManyField(
+        'auth.Group', 
+        related_name='custom_user_set', 
+        blank=True
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission', 
+        related_name='custom_user_set', 
+        blank=True
+    )
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
 
 class KycVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
