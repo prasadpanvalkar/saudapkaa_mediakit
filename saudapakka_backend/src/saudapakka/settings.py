@@ -6,9 +6,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 1. Initialize environ
-env = environ.Env(
-    DEBUG=(bool, False)
-)
+env = environ.Env()
+
+# env = environ.Env(
+#     DEBUG=(bool, False)
+# )
 
 # 2. Read the .env file
 # This assumes your .env file is in the root folder (where manage.py is)
@@ -175,3 +177,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+# --- SANDBOX KYC CONFIGURATION ---
+# We use env.str() to read from the .env file through django-environ
+# Near the top where you read env variables
+SANDBOX_API_KEY = env('SANDBOX_API_KEY')
+SANDBOX_API_SECRET = env('SANDBOX_API_SECRET')

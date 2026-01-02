@@ -1,3 +1,4 @@
+# Docker Compose Configuration for Saudapakka Application : docker-compose.yml
 services:
   # 1. DATABASE
   db:
@@ -18,7 +19,9 @@ services:
 
   # 2. BACKEND
   web:
-    build: ./saudapakka_backend
+    build:
+      context: ./saudapakka_backend
+      dockerfile: Dockerfile  # FIX: Removed the extra directory prefix
     command: >
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
@@ -34,17 +37,17 @@ services:
 
   # 3. FRONTEND
   frontend:
-    build: ./saudapakka_frontend
+    build:
+      context: ./saudapakka_frontend
+      dockerfile: Dockerfile  # FIX: Removed the extra directory prefix
     container_name: saudapakka_nextjs
     volumes:
       - ./saudapakka_frontend:/app
-      # This keeps the container's node_modules safe from your local machine
       - /app/node_modules
       - /app/.next
     ports:
       - "3000:3000"
     environment:
-      # REMOVED THE BROKEN PATH VARIABLE HERE
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
     depends_on:
