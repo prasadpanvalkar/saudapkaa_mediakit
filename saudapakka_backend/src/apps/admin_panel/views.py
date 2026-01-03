@@ -11,7 +11,7 @@ from django.db.models import Count, Avg, Q
 
 # Import models from other apps
 from apps.properties.models import Property
-from apps.users.models import BrokerProfile, KycVerification
+from apps.users.models import BrokerProfile, KYCVerification
 
 User = get_user_model()
 
@@ -42,8 +42,8 @@ class AdminDashboardStats(APIView):
                 "sellers": User.objects.filter(is_active_seller=True).count(),
                 "brokers": User.objects.filter(is_active_broker=True).count(),
                 "new_this_month": User.objects.filter(date_joined__gte=last_30_days).count(),
-                "kyc_verified": User.objects.filter(kycverification__status='VERIFIED').count(),
-                "kyc_pending": User.objects.filter(kycverification__status='INITIATED').count(),
+                "kyc_verified": User.objects.filter(kyc_data__status='VERIFIED').count(),
+                "kyc_pending": User.objects.filter(kyc_data__status='INITIATED').count(),
             },
 
             # --- 2. Inventory (Property) Metrics ---

@@ -183,3 +183,4 @@ CSRF_TRUSTED_ORIGINS = [
 # Near the top where you read env variables
 SANDBOX_API_KEY = env('SANDBOX_API_KEY')
 SANDBOX_API_SECRET = env('SANDBOX_API_SECRET')
+SANDBOX_ENV = env('SANDBOX_ENV', default='test')

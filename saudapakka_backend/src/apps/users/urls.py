@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     SendOtpView, VerifyOtpView, InitiateKYCView, 
     VerifyKYCStatusView, UpgradeRoleView, SearchProfileView, 
-    AdminDashboardStats, UserProfileView
+    AdminDashboardStats, UserProfileView, KYCCallbackView
 )
 
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('search-profiles/', SearchProfileView.as_view(), name='search-profiles'),
     path('admin/stats/', AdminDashboardStats.as_view(), name='admin-stats'),
     path('kyc/initiate/', InitiateKYCView.as_view(), name='kyc-initiate'),
+    path('kyc/callback/', KYCCallbackView.as_view(), name='kyc-callback'),
     path('kyc/verify-status/', VerifyKYCStatusView.as_view(), name='kyc-verify-status'),
 ]

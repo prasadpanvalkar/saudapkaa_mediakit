@@ -15,6 +15,11 @@ class Property(models.Model):
     
     # --- 1. Core Configuration ---
     title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    listing_type = models.CharField(max_length=10, choices=[
+        ('SALE', 'Sell'),
+        ('RENT', 'Rent')
+    ], default='SALE')
     property_type = models.CharField(max_length=50, choices=[
         ('FLAT', 'Flat/Apartment'),
         ('VILLA', 'Villa/House'),

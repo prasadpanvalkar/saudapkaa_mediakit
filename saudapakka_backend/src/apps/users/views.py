@@ -141,6 +141,9 @@ class InitiateKYCView(APIView):
         result = sandbox.initiate_digilocker(redirect_url)
         
         if result.get('code') == 200:
+            # FIX: Store entity_id in session as per guide
+            request.session['kyc_entity_id'] = result['data']['entity_id']
+            
             KYCVerification.objects.update_or_create(
                 user=request.user,
                 defaults={'request_id': result['data']['entity_id'], 'status': 'INITIATED'}
@@ -151,15 +154,36 @@ class InitiateKYCView(APIView):
         print(f"❌ SANDBOX ERROR: {result}")
         return Response({"error": result.get('message', "Forbidden")}, status=403)
 
+class KYCCallbackView(APIView):
+    """
+    Handles the redirect from DigiLocker.
+    Even though Frontend handles the main flow, this endpoint prevents 404s 
+    if the redirect hits the backend directly.
+    """
+    permission_classes = [AllowAny] # Callback might not have auth headers if browser redirect
+
+    def get(self, request):
+        print("DEBUG: KYCCallbackView hit!", flush=True)
+        # We can try to rely on session if cookie is present, but usually 
+        # for detached callbacks we just return a success page or JSON.
+        # Since frontend handles the verification, we just confirm receipt.
+        return Response({
+            "status": "Target Reached", 
+            "message": "Please close this window and return to the dashboard if not redirected automatically."
+        })
+
 class VerifyKYCStatusView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         entity_id = request.data.get('entity_id')
+        print(f"DEBUG: VerifyKYCStatusView received entity_id: {entity_id}", flush=True)
+        
         if not entity_id:
             return Response({"error": "entity_id is required"}, status=400)
 
         result = sandbox.get_kyc_status(entity_id)
+        print(f"DEBUG: Sandbox result: {result}", flush=True)
         
         # 1. Check if Sandbox returned a "Processing" status
         # Note: Sandbox might return a 202 status code or a message like yours
@@ -205,7 +229,8 @@ class VerifyKYCStatusView(APIView):
             
         return Response({
             "status": "FAILED",
-            "error": result.get('message', "Verification failed.")
+            "error": result.get('message', "Verification failed."),
+            "upstream_response": result
         }, status=400)
 # --- 4. ROLE UPGRADES ---
 

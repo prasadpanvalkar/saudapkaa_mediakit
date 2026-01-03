@@ -8,6 +8,7 @@ interface User {
   email: string;
   is_active_seller: boolean;
   is_active_broker: boolean;
+  is_staff: boolean;
 }
 
 interface AuthState {
@@ -20,11 +21,11 @@ export const useAuth = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      
+
       setAuth: (user, token) => {
         // 1. Save Token to Cookie (For API calls)
         Cookies.set('access_token', token, { expires: 7 });
-        
+
         // 2. Update State (Persist middleware will auto-save this to localStorage)
         set({ user });
       },

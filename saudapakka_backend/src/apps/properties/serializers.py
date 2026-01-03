@@ -5,7 +5,7 @@ from apps.users.serializers import UserSerializer
 class PropertyImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyImage
-        fields = ['id', 'image', 'is_cover', 'created_at']
+        fields = ['id', 'image', 'is_thumbnail']
 
 class PropertySerializer(serializers.ModelSerializer):
     # --- Nested Representations ---
@@ -18,12 +18,16 @@ class PropertySerializer(serializers.ModelSerializer):
     availability_status_display = serializers.CharField(source='get_availability_status_display', read_only=True)
     listed_by_display = serializers.CharField(source='get_listed_by_display', read_only=True)
     facing_display = serializers.CharField(source='get_facing_display', read_only=True)
+    
+    # --- Computed Fields ---
+    has_7_12 = serializers.SerializerMethodField()
+    has_mojani = serializers.SerializerMethodField()
 
     class Meta:
         model = Property
         fields = [
             # Basic & System
-            'id', 'owner', 'owner_details', 'title', 'project_name', 'property_type', 
+            'id', 'owner', 'owner_details', 'title', 'description', 'listing_type', 'project_name', 'property_type', 
             'property_type_display', 'verification_status', 'created_at',
 
             # Configuration
@@ -59,7 +63,7 @@ class PropertySerializer(serializers.ModelSerializer):
         # --- Security: Fields that the user CANNOT change manually ---
         read_only_fields = [
             'id', 'owner', 'verification_status', 'price_per_sqft', 
-            'created_at', 'has_7_12', 'has_mojani'
+            'created_at'
         ]
 
     def validate(self, data):
@@ -83,4 +87,9 @@ class PropertySerializer(serializers.ModelSerializer):
         if value < -180 or value > 180:
             raise serializers.ValidationError("Invalid Longitude range.")
         return value
-    
+
+    def get_has_7_12(self, obj):
+        return bool(obj.doc_7_12)
+
+    def get_has_mojani(self, obj):
+        return bool(obj.doc_mojani)

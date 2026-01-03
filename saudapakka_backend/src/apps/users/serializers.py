@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     Includes the 'full_name' property from the model.
     """
     full_name = serializers.ReadOnlyField()
+    kyc_status = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -21,9 +22,17 @@ class UserSerializer(serializers.ModelSerializer):
             'full_name', 
             'phone_number', 
             'is_active_seller', 
-            'is_active_broker'
+            'is_active_broker',
+            'kyc_status',
+            'is_staff'
         ]
-        read_only_fields = ['id', 'email', 'full_name']
+        read_only_fields = ['id', 'email', 'full_name', 'kyc_status', 'is_staff']
+
+    def get_kyc_status(self, obj):
+        try:
+            return obj.kyc_data.status
+        except KYCVerification.DoesNotExist:
+            return "NOT_STARTED"
 
 class KYCVerificationSerializer(serializers.ModelSerializer):
     """

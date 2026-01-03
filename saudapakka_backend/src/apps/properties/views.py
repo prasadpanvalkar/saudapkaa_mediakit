@@ -67,8 +67,8 @@ class PropertyViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         
-        # Check User Authorization
-        if not (user.is_active_seller or user.is_active_broker):
+        # Check User Authorization (Staff users bypass this check)
+        if not user.is_staff and not (user.is_active_seller or user.is_active_broker):
             raise permissions.PermissionDenied(
                 "Access Denied: You must complete KYC to list properties."
             )
@@ -87,7 +87,7 @@ class PropertyViewSet(viewsets.ModelViewSet):
             return Response({"error": "Unauthorized"}, status=403)
 
         image_file = request.data.get('image')
-        is_cover = request.data.get('is_cover', False) # Option to set as main image
+        is_thumbnail = request.data.get('is_thumbnail', False) # Option to set as main image
 
         if not image_file:
             return Response({"error": "No file uploaded"}, status=400)
@@ -95,7 +95,7 @@ class PropertyViewSet(viewsets.ModelViewSet):
         photo = PropertyImage.objects.create(
             property=property_obj, 
             image=image_file, 
-            is_cover=is_cover
+            is_thumbnail=is_thumbnail
         )
         
         return Response(PropertyImageSerializer(photo).data, status=201)
