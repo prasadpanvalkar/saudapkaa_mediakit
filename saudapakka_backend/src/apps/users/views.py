@@ -160,8 +160,8 @@ class InitiateKYCView(APIView):
             )
             return Response(result['data'])
         
-        # Log error detail for you
-        print(f"❌ SANDBOX ERROR: {result}")
+        # Log error detail
+        logger.error(f"Sandbox API error: {result}")
         return Response({"error": result.get('message', "Forbidden")}, status=403)
 
 class KYCCallbackView(APIView):
@@ -173,7 +173,7 @@ class KYCCallbackView(APIView):
     permission_classes = [AllowAny] # Callback might not have auth headers if browser redirect
 
     def get(self, request):
-        print("DEBUG: KYCCallbackView hit!", flush=True)
+        logger.info("KYCCallbackView hit")
         # We can try to rely on session if cookie is present, but usually 
         # for detached callbacks we just return a success page or JSON.
         # Since frontend handles the verification, we just confirm receipt.
@@ -187,7 +187,7 @@ class VerifyKYCStatusView(APIView):
 
     def post(self, request):
         entity_id = request.data.get('entity_id')
-        print(f"DEBUG: Verifying ID {entity_id}")
+        logger.debug(f"Verifying KYC ID: {entity_id}")
         
         result = sandbox.get_kyc_status(entity_id)
         
@@ -210,7 +210,7 @@ class VerifyKYCStatusView(APIView):
             user.first_name = kyc.full_name.split(' ')[0]
             user.save()
 
-            print(f"✅ KYC SUCCESS for {user.email}")
+            logger.info(f"KYC verification successful for {user.email}")
             return Response({"status": "SUCCESS", "data": {"name": kyc.full_name}})
 
         # If rate limited or processing
