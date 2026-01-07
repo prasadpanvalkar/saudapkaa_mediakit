@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
 
   // Production environment variables
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://saudapakka.com/api',
+    // FIX: Default to localhost in development to prevent 401s/CORS errors
+    // Also removed /api from prod URL to prevent double /api/api/ paths
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://saudapakka.com'),
   },
 
   images: {

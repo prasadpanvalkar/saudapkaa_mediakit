@@ -24,6 +24,7 @@ class PropertySerializer(serializers.ModelSerializer):
     availability_status_display = serializers.CharField(source='get_availability_status_display', read_only=True)
     listed_by_display = serializers.CharField(source='get_listed_by_display', read_only=True)
     facing_display = serializers.CharField(source='get_facing_display', read_only=True)
+    sub_type_display = serializers.CharField(source='get_sub_type_display', read_only=True)
     
     # --- Computed Fields ---
     has_7_12 = serializers.SerializerMethodField()
@@ -34,7 +35,7 @@ class PropertySerializer(serializers.ModelSerializer):
         fields = [
             # Basic & System
             'id', 'owner', 'owner_details', 'title', 'description', 'listing_type', 'project_name', 'property_type', 
-            'property_type_display', 'verification_status', 'created_at',
+            'property_type_display', 'sub_type', 'sub_type_display', 'verification_status', 'created_at',
 
             # Configuration
             'bhk_config', 'bathrooms', 'balconies', 'furnishing_status', 
@@ -62,8 +63,21 @@ class PropertySerializer(serializers.ModelSerializer):
             'images', 'video_url', 'floor_plan', 'floor_plans', 'whatsapp_number', 
             'listed_by', 'listed_by_display',
 
-            # Legal Docs
-            'doc_7_12', 'doc_mojani', 'has_7_12', 'has_mojani'
+            # Legal Docs (Required)
+            'building_commencement_certificate',
+            'building_completion_certificate',
+            'layout_sanction',
+            'layout_order',
+            'na_order_or_gunthewari',
+            'mojani_nakasha',
+            'doc_7_12_or_pr_card',
+            'title_search_report',
+            'has_7_12', 'has_mojani',
+
+            # Legal Docs (Optional)
+            'rera_project_certificate',
+            'gst_registration',
+            'sale_deed_registration_copy'
         ]
         
         # --- Security: Fields that the user CANNOT change manually ---
@@ -74,6 +88,60 @@ class PropertySerializer(serializers.ModelSerializer):
 
     # Removed custom validation for now to match revert request
     
+
+    def validate(self, data):
+        """
+        Cross-field validation to ensure sub_type belongs to the correct property_type.
+        """
+        property_type = data.get('property_type')
+        sub_type = data.get('sub_type')
+
+        if not sub_type:
+            return data
+
+        valid_sub_types = {
+            'VILLA_BUNGALOW': ['BUNGALOW', 'TWIN_BUNGALOW', 'ROWHOUSE', 'VILLA'],
+            'PLOT': ['RES_PLOT', 'COM_PLOT'],
+            'LAND': ['AGRI_LAND', 'IND_LAND'],
+            'COMMERCIAL_UNIT': ['SHOP', 'OFFICE', 'SHOWROOM'],
+            'FLAT': []  # No sub-types for Flat
+        }
+
+        allowed = valid_sub_types.get(property_type, [])
+        if sub_type and sub_type not in allowed:
+            raise serializers.ValidationError({
+                "sub_type": f"Invalid sub_type '{sub_type}' for property_type '{property_type}'. Valid choices are: {allowed}"
+            })
+
+        # --- Document Validation (Required Fields) ---
+        required_docs = [
+            'building_commencement_certificate',
+            'building_completion_certificate',
+            'layout_sanction',
+            'layout_order',
+            'na_order_or_gunthewari',
+            'mojani_nakasha',
+            'doc_7_12_or_pr_card',
+            'title_search_report'
+        ]
+
+        # Only validate on CREATE or when any of these fields are being UPDATED
+        # We check if the instance exists to distinguish between create and update
+        errors = {}
+        for doc in required_docs:
+            # If creating, or if the field is present in data (updating)
+            # OR if it's an update and the instance doesn't have it yet.
+            val = data.get(doc)
+            
+            # Simple check: if it's missing in data AND not on instance, it's an error
+            # But we only want to enforce this strictly if the user is submitting the form.
+            if not val and (not self.instance or not getattr(self.instance, doc)):
+                errors[doc] = "This document is required."
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
 
     def validate_latitude(self, value):
         if value < -90 or value > 90:
@@ -86,7 +154,7 @@ class PropertySerializer(serializers.ModelSerializer):
         return value
 
     def get_has_7_12(self, obj):
-        return bool(obj.doc_7_12)
+        return bool(obj.doc_7_12_or_pr_card)
 
     def get_has_mojani(self, obj):
-        return bool(obj.doc_mojani)
+        return bool(obj.mojani_nakasha)

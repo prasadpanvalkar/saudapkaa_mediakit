@@ -1,44 +1,50 @@
-// axios.ts
+// src/lib/axios.ts
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-// Production: Use relative paths (handled by Next.js rewrites or reverse proxy)
-// The API URL is configured via NEXT_PUBLIC_API_URL environment variable
-// The API URL is configured via NEXT_PUBLIC_API_URL environment variable
-const api_url = process.env.NEXT_PUBLIC_API_URL || '';
-if (typeof window !== 'undefined') {
-  console.log('API_URL being used:', api_url);
-}
-
 const api = axios.create({
-  baseURL: api_url,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
 });
 
-// Automatically add the Token to every request if it exists
+// Public endpoints that should NOT send Authorization headers
+const PUBLIC_ENDPOINTS = [
+  '/api/auth/login/',
+  '/api/auth/verify/',
+  '/api/auth/register/',
+];
+
 api.interceptors.request.use((config) => {
-  const token = Cookies.get('access_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  // Client-only check
+  if (typeof window !== 'undefined') {
+    // Skip token for public auth endpoints
+    const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint =>
+      config.url?.includes(endpoint)
+    );
+
+    if (!isPublicEndpoint) {
+      const token = Cookies.get('access_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
   }
   return config;
 });
 
-// Handle authentication errors
+// Add response interceptor to handle 401 globally
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // If we get a 401 error, clear the invalid token
-    if (error.response?.status === 401) {
-      const token = Cookies.get('access_token');
-      if (token) {
-        // Clear the invalid token
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
+    // If 401 and not a public endpoint, redirect to login
+    if (error.response?.status === 401 && typeof window !== 'undefined') {
+      const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint =>
+        error.config?.url?.includes(endpoint)
+      );
 
-        // Retry the request without authentication
-        const config = error.config;
-        delete config.headers.Authorization;
-        return axios.request(config);
+      if (!isPublicEndpoint) {
+        Cookies.remove('access_token');
+        localStorage.removeItem('saudapakka-auth');
+        window.location.href = '/login';
       }
     }
     return Promise.reject(error);

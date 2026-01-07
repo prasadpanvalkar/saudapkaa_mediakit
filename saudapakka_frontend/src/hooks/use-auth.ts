@@ -38,8 +38,17 @@ export const useAuth = create<AuthState>()(
           // This updates the local state AND the persisted localStorage
           set({ user: res.data });
           console.log("✅ Auth State Synchronized:", res.data);
-        } catch (error) {
+        } catch (error: any) {
           console.error("Failed to refresh user data", error);
+          // If unauthorized, clear token and redirect to login
+          if (error.response?.status === 401) {
+            Cookies.remove('access_token');
+            set({ user: null });
+            // Optionally, you could trigger a router redirect here, but layout will handle it via checkUser
+          } else {
+            set({ user: null }); // Ensure user is cleared for other errors
+          }
+          throw error; // Propagate error so checkUser/layout knows auth failed
         }
       },
 
@@ -61,6 +70,7 @@ export const useAuth = create<AuthState>()(
       name: 'saudapakka-auth',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ user: state.user }),
+      skipHydration: true, // Prevent automatic hydration during SSR
     }
   )
 );

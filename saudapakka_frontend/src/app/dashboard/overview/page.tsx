@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { useAuth } from "@/hooks/use-auth";
 import api from "@/lib/axios";
 import {
@@ -40,6 +41,7 @@ function SellerDashboard({ user }: { user: any }) {
   useEffect(() => {
     // Fetch stats specific to seller
     const fetchData = async () => {
+      if (!user || !Cookies.get('access_token')) return;
       try {
         const res = await api.get("/api/properties/my_listings/");
         const myListings = res.data;
@@ -49,7 +51,9 @@ function SellerDashboard({ user }: { user: any }) {
           totalViews: myListings.reduce((acc: number, item: any) => acc + (item.views || 0), 0),
           pending: myListings.filter((item: any) => item.verification_status === "PENDING").length
         });
-      } catch (e) { console.error(e); }
+      } catch (e) {
+        console.error("Error fetching seller stats:", e);
+      }
     };
     fetchData();
   }, [user]);
@@ -114,10 +118,13 @@ function BuyerDashboard({ user }: { user: any }) {
 
   useEffect(() => {
     const fetchSaved = async () => {
+      if (!user || !Cookies.get('access_token')) return;
       try {
         const res = await api.get("/api/properties/my_saved/");
         setSavedCount(res.data.length);
-      } catch (e) { }
+      } catch (e) {
+        console.error("Error fetching buyer stats:", e);
+      }
     };
     fetchSaved();
   }, []);
@@ -171,7 +178,7 @@ function BuyerDashboard({ user }: { user: any }) {
               Active Buyer
             </span>
             {!user.is_active_seller && (
-              <Link href="/dashboard/overview/upgrade" className="text-sm text-primary-green hover:underline ml-auto flex items-center">
+              <Link href="/dashboard/kyc" className="text-sm text-primary-green hover:underline ml-auto flex items-center">
                 Upgrade Account <ArrowRight className="w-3 h-3 ml-1" />
               </Link>
             )}
@@ -185,7 +192,15 @@ function BuyerDashboard({ user }: { user: any }) {
 // --- MAIN PAGE ---
 export default function OverviewPage() {
   const { user } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
 
+  useEffect(() => {
+    setMounted(true);
+    setCurrentDate(new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
+  if (!mounted) return null;
   if (!user) return <div className="p-8">Loading dashboard...</div>;
 
   const isSellerOrBroker = user.is_active_seller || user.is_active_broker;
@@ -201,7 +216,7 @@ export default function OverviewPage() {
           <p className="text-gray-500 mt-2">Here is what is happening with your account today.</p>
         </div>
         <div className="text-sm text-gray-400 bg-gray-50 px-4 py-2 rounded-full border border-gray-100">
-          {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+          {currentDate}
         </div>
       </div>
 

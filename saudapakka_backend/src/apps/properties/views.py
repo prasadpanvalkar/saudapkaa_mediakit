@@ -27,7 +27,7 @@ class PropertyFilter(django_filters.FilterSet):
     class Meta:
         model = Property
         fields = [
-            'property_type', 'bhk_config', 'city', 'locality', 
+            'property_type', 'sub_type', 'bhk_config', 'city', 'locality', 
             'furnishing_status', 'availability_status', 'facing'
         ]
 

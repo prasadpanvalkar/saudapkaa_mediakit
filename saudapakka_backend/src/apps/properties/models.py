@@ -5,15 +5,11 @@ from django.conf import settings
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
-from django.db import models
-import uuid
-
 class Property(models.Model):
     # --- Identifiers ---
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='properties')
     
-    # --- 1. Core Configuration ---
     # --- 1. Core Configuration ---
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -23,14 +19,36 @@ class Property(models.Model):
         ('RENT', 'Rent')
     ], default='SALE')
 
-    property_type = models.CharField(max_length=50, choices=[
-        ('FLAT', 'Flat/Apartment'),
-        ('VILLA', 'Villa/House'),
-        ('LAND', 'Plot/Land'),
-        ('STUDIO', 'Studio'),
-        ('PENTHOUSE', 'Penthouse'),
-        ('OFFICE', 'Office Space')
-    ])
+    # Main Categories
+    PROPERTY_TYPE_CHOICES = [
+        ('VILLA_BUNGALOW', 'Villa / Bungalow / Rowhouse'),
+        ('FLAT', 'Flat / Apartment'),
+        ('PLOT', 'Plot (Residential / Commercial)'),
+        ('LAND', 'Land (Agriculture / Industrial)'),
+        ('COMMERCIAL_UNIT', 'Shop / Office / Showroom')
+    ]
+
+    # Specific Sub-types
+    SUB_TYPE_CHOICES = [
+        # Villa/Bungalow Sub-categories
+        ('BUNGALOW', 'Bungalow'),
+        ('TWIN_BUNGALOW', 'Twin Bungalow'),
+        ('ROWHOUSE', 'Rowhouse'),
+        ('VILLA', 'Villa'),
+        # Plot Sub-categories
+        ('RES_PLOT', 'Residential Plot'),
+        ('COM_PLOT', 'Commercial Plot'),
+        # Land Sub-categories
+        ('AGRI_LAND', 'Agricultural Land'),
+        ('IND_LAND', 'Industrial Land'),
+        # Commercial Sub-categories
+        ('SHOP', 'Shop'),
+        ('OFFICE', 'Office'),
+        ('SHOWROOM', 'Showroom'),
+    ]
+
+    property_type = models.CharField(max_length=50, choices=PROPERTY_TYPE_CHOICES)
+    sub_type = models.CharField(max_length=50, choices=SUB_TYPE_CHOICES, null=True, blank=True)
 
     bhk_config = models.IntegerField(default=1, choices=[(1, '1 BHK'), (2, '2 BHK'), (3, '3 BHK'), (4, '4+ BHK'), (5, '5+ BHK')])
     bathrooms = models.IntegerField(default=1)
@@ -98,10 +116,20 @@ class Property(models.Model):
     video_url = models.URLField(blank=True, null=True, help_text="YouTube/Hosted link")
     floor_plan = models.ImageField(upload_to='properties/floor_plans/', null=True, blank=True)
     
-    # Verification Documents (Existing)
-    doc_7_12 = models.FileField(upload_to='properties/docs/7_12/', null=True, blank=True)
-    doc_mojani = models.FileField(upload_to='properties/docs/mojani/', null=True, blank=True)
-    # ... other docs stay the same ...
+    # Verification Documents (Comprehensive List)
+    building_commencement_certificate = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    building_completion_certificate = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    layout_sanction = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    layout_order = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    na_order_or_gunthewari = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    mojani_nakasha = models.FileField(upload_to='properties/docs/', null=True, blank=False) # Renamed from doc_mojani
+    doc_7_12_or_pr_card = models.FileField(upload_to='properties/docs/', null=True, blank=False) # Renamed from doc_7_12
+    title_search_report = models.FileField(upload_to='properties/docs/', null=True, blank=False)
+    
+    # Optional Verification Documents
+    rera_project_certificate = models.FileField(upload_to='properties/docs/', null=True, blank=True)
+    gst_registration = models.FileField(upload_to='properties/docs/', null=True, blank=True)
+    sale_deed_registration_copy = models.FileField(upload_to='properties/docs/', null=True, blank=True)
 
     # --- 8. Contact Info ---
     listed_by = models.CharField(max_length=20, choices=[
@@ -116,8 +144,8 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # Auto-calculate Price per Sq.ft
-        if self.total_price and self.super_builtup_area:
+        # Auto-calculate Price per Sq.ft safely
+        if self.total_price and self.super_builtup_area and self.super_builtup_area > 0:
             self.price_per_sqft = self.total_price / self.super_builtup_area
         super().save(*args, **kwargs)
 
@@ -152,3 +180,25 @@ def delete_image_file(sender, instance, **kwargs):
     """Deletes physical image files from storage when the database record is deleted."""
     if instance.image:
         instance.image.delete(save=False)
+
+@receiver(post_delete, sender=Property)
+def delete_property_files(sender, instance, **kwargs):
+    """Deletes all document files and floor plans when a Property record is deleted."""
+    file_fields = [
+        'floor_plan',
+        'building_commencement_certificate',
+        'building_completion_certificate',
+        'layout_sanction',
+        'layout_order',
+        'na_order_or_gunthewari',
+        'mojani_nakasha',
+        'doc_7_12_or_pr_card',
+        'title_search_report',
+        'rera_project_certificate',
+        'gst_registration',
+        'sale_deed_registration_copy'
+    ]
+    for field_name in file_fields:
+        file_field = getattr(instance, field_name)
+        if file_field:
+            file_field.delete(save=False)

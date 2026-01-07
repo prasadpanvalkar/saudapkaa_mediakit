@@ -23,6 +23,7 @@ class PropertyAdmin(admin.ModelAdmin):
         'project_name', 
         'total_price', 
         'property_type', 
+        'sub_type',
         'verification_status', 
         'owner_display',  # Custom display for SaudaPakka
         'created_at'
@@ -32,6 +33,7 @@ class PropertyAdmin(admin.ModelAdmin):
     list_filter = (
         'verification_status', 
         'property_type', 
+        'sub_type',
         'city', 
         'furnishing_status',
         'availability_status'
@@ -43,7 +45,7 @@ class PropertyAdmin(admin.ModelAdmin):
     # 4. Organizing the Detail Form into Sections
     fieldsets = (
         ('Basic Information', {
-            'fields': ('owner', 'title', 'description', 'project_name', 'property_type', 'verification_status')
+            'fields': ('owner', 'title', 'description', 'project_name', 'property_type', 'sub_type', 'verification_status')
         }),
         ('Configuration', {
             'fields': ('bhk_config', 'bathrooms', 'balconies', 'furnishing_status')
@@ -57,6 +59,21 @@ class PropertyAdmin(admin.ModelAdmin):
         ('Building & Status', {
             'fields': ('specific_floor', 'total_floors', 'facing', 'availability_status', 'possession_date', 'age_of_construction')
         }),
+        ('Verification Documents', {
+            'fields': (
+                'building_commencement_certificate',
+                'building_completion_certificate',
+                'layout_sanction',
+                'layout_order',
+                'na_order_or_gunthewari',
+                'mojani_nakasha',
+                'doc_7_12_or_pr_card',
+                'title_search_report',
+                'rera_project_certificate',
+                'gst_registration',
+                'sale_deed_registration_copy'
+            )
+        }),
         ('Amenities', {
             'fields': (
                 'has_power_backup', 'has_lift', 'has_swimming_pool', 'has_club_house', 
@@ -66,9 +83,6 @@ class PropertyAdmin(admin.ModelAdmin):
         }),
         ('Media & Contact', {
             'fields': ('video_url', 'floor_plan', 'whatsapp_number', 'listed_by')
-        }),
-        ('Verification Documents', {
-            'fields': ('doc_7_12', 'doc_mojani')
         }),
     )
 
