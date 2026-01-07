@@ -31,6 +31,12 @@ else:
 "
 
 # Start Gunicorn
-echo "Starting Gunicorn..."
-# 120s timeout to handle slow initial requests/migrations if they overlap
-exec gunicorn saudapakka.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
+
+if [ $# -gt 0 ]; then
+    exec "$@"
+else
+    # Start Gunicorn
+    echo "Starting Gunicorn..."
+    # 120s timeout to handle slow initial requests/migrations if they overlap
+    exec gunicorn saudapakka.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
+fi

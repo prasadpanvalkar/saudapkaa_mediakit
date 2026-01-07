@@ -19,11 +19,13 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 # =============================================================================
 
 # SECRET_KEY from environment variable (NEVER hardcode in production)
-SECRET_KEY = os.getenv('SECRET_KEY', 'dev-only-insecure-key-replace-in-production')
+# SECRET_KEY from environment variable (NEVER hardcode in production)
+SECRET_KEY = env.str('SECRET_KEY', default='dev-only-insecure-key-replace-in-production')
 
-DEBUG = False
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['saudapakka.com', '72.61.246.159', 'localhost', '127.0.0.1']
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['saudapakka.com', '72.61.246.159', 'localhost', '127.0.0.1'])
 
 
 # =============================================================================
@@ -187,15 +189,11 @@ SIMPLE_JWT = {
 # CORS CONFIGURATION (Production Locked)
 # =============================================================================
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    "https://saudapakka.com",
-]
+CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=False)
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=["https://saudapakka.com"])
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://saudapakka.com",
-]
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=["https://saudapakka.com"])
 
 
 # =============================================================================
@@ -204,12 +202,15 @@ CSRF_TRUSTED_ORIGINS = [
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-X_FRAME_OPTIONS = 'DENY'
+
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    X_FRAME_OPTIONS = 'DENY'
+
 
 
 # =============================================================================

@@ -4,8 +4,14 @@ import Cookies from 'js-cookie';
 
 // Production: Use relative paths (handled by Next.js rewrites or reverse proxy)
 // The API URL is configured via NEXT_PUBLIC_API_URL environment variable
+// The API URL is configured via NEXT_PUBLIC_API_URL environment variable
+const api_url = process.env.NEXT_PUBLIC_API_URL || '';
+if (typeof window !== 'undefined') {
+  console.log('API_URL being used:', api_url);
+}
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '',
+  baseURL: api_url,
 });
 
 // Automatically add the Token to every request if it exists
