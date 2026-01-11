@@ -17,7 +17,7 @@ import {
   School, ShoppingCart, Hospital, ChevronRight, ArrowLeft, Eye,
   Download, Flag, Clock, X, ChevronLeft, Wifi, Droplet, Wind,
   Package, Sparkles, Trees, Users, Camera, Check, ExternalLink,
-  MessageCircle, Loader2
+  MessageCircle, Loader2, Trash2, UserCircle, FileCheck
 } from "lucide-react";
 
 import { PropertyDetail } from "@/types/property";
@@ -126,6 +126,7 @@ export default function PropertyDetailsPage() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactDetails, setContactDetails] = useState<any>(null);
   const [contactLoading, setContactLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // Notification State
   const [notification, setNotification] = useState({ show: false, message: "", type: "info" as "info" | "success" | "error" });
@@ -211,9 +212,18 @@ export default function PropertyDetailsPage() {
       return;
     }
 
-    // For now, let's trigger the modal if contact details aren't ready, 
-    // or if we want to force the "Contact Owner" flow to reveal details.
-    handleContactOwner();
+    if (property?.whatsapp_number) {
+      const cleanNumber = property.whatsapp_number.replace(/\D/g, '');
+      const currentUrl = window.location.href;
+      const message = `Hello, I'm interested in your property: ${property.title}.\n\nCheck it out here: ${currentUrl}`;
+      const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
+
+      // Track the click if needed, then open
+      window.open(whatsappUrl, '_blank');
+    } else {
+      // Fallback if somehow no number exists
+      handleContactOwner();
+    }
   };
 
   const formatPrice = (price: number) => {
@@ -261,10 +271,24 @@ export default function PropertyDetailsPage() {
     }
   };
 
+
+
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     showNotify("Link copied to clipboard!", "success");
     setShowShareModal(false);
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this property? This action cannot be undone.")) return;
+    setDeleting(true);
+    try {
+      await api.delete(`/api/properties/${id}/`);
+      router.push('/dashboard/my-listings'); // Redirect after delete
+    } catch (error: any) {
+      showNotify(error.response?.data?.error || "Failed to delete property", "error");
+      setDeleting(false);
+    }
   };
 
   const getAmenityIcon = (amenity: string) => {
@@ -531,6 +555,19 @@ export default function PropertyDetailsPage() {
                         </Link>
                       )}
                       {/* Show disabled/status button if mandate exists? Optional, for now just hide as requested */}
+
+                      {/* Delete Button (Owner/Admin) */}
+                      {(user?.is_staff || (user && property.owner === user.id) || (user?.is_active_broker && property.has_active_mandate)) && (
+                        <Button
+                          variant="destructive"
+                          onClick={handleDelete}
+                          disabled={deleting}
+                          className="h-12 px-6 rounded-2xl bg-red-50 text-red-600 hover:bg-red-100 border border-red-100 hover:border-red-200 transition-all shadow-sm"
+                        >
+                          {deleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5 mr-2" />}
+                          Delete Property
+                        </Button>
+                      )}
                     </div>
                   </div>
 
@@ -635,6 +672,75 @@ export default function PropertyDetailsPage() {
                     <p className="text-gray-400 italic">No description provided.</p>
                   )}
                 </div>
+              </div>
+
+              {/* Owner Info / Listed By (Mobile & Desktop) */}
+              <div className="bg-white sm:rounded-2xl p-4 sm:p-6 md:p-8 sm:shadow-lg mb-4 sm:mb-6 border-l-4 border-[#2D5F3F]">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-[#2D5F3F]">
+                    <UserCircle className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-gray-500 text-xs uppercase tracking-wider font-semibold">Listed by</h3>
+                    <p className="text-lg font-bold text-gray-900">{property.owner_details?.full_name || "SaudaPakka User"}</p>
+                    <p className="text-xs text-green-600 font-medium">{property.listed_by_display || "Owner"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Verification Vault (Mobile First) */}
+              <div className="bg-gradient-to-br from-green-50 to-white sm:rounded-2xl p-4 sm:p-6 md:p-8 sm:shadow-lg mb-4 sm:mb-6 border border-green-100">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <FileCheck className="w-6 h-6 text-green-700" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">Verification Vault</h2>
+                    <p className="text-xs text-gray-500">Official documents for transparency</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    'building_commencement_certificate',
+                    'building_completion_certificate',
+                    'layout_sanction',
+                    'layout_order',
+                    'na_order_or_gunthewari',
+                    'mojani_nakasha',
+                    'doc_7_12_or_pr_card',
+                    'title_search_report',
+                    'rera_project_certificate',
+                    'gst_registration',
+                    'sale_deed_registration_copy'
+                  ].map(key => {
+                    const fileUrl = property[key as keyof PropertyDetail];
+                    if (!fileUrl) return null;
+                    return (
+                      <a
+                        key={key}
+                        href={typeof fileUrl === 'string' ? fileUrl : '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center justify-center p-3 bg-white border border-green-100 rounded-xl hover:shadow-md hover:border-green-300 transition-all text-center group"
+                      >
+                        <FileText className="w-6 h-6 text-green-600 mb-2 group-hover:scale-110 transition-transform" />
+                        <span className="text-[10px] sm:text-xs font-medium text-gray-700 leading-tight">
+                          {formatDocumentName(key)}
+
+                        </span>
+                        <span className="text-[9px] text-green-500 mt-1 font-semibold">Tap to View</span>
+                      </a>
+                    );
+                  })}
+                </div>
+                {/* Empty state if no docs */}
+                {!Object.keys(property).some(k => [
+                  'building_commencement_certificate', 'building_completion_certificate', 'layout_sanction', 'layout_order',
+                  'na_order_or_gunthewari', 'mojani_nakasha', 'doc_7_12_or_pr_card', 'title_search_report'
+                ].includes(k) && property[k as keyof PropertyDetail]) && (
+                    <p className="text-sm text-gray-500 italic text-center py-4">No public documents uploaded yet.</p>
+                  )}
               </div>
 
 

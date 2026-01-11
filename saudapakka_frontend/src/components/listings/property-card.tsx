@@ -28,11 +28,12 @@ export interface Property {
   is_saved?: boolean; // In case backend provides it later
 }
 
-export default function PropertyCard({ property }: { property: Property }) {
+export default function PropertyCard({ property, onDelete }: { property: Property; onDelete?: (id: string) => void }) {
   const router = useRouter();
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(property.is_saved || false);
   const [loadingSave, setLoadingSave] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const mainImage = property.images && property.images.length > 0
     ? property.images[0].image
@@ -55,6 +56,16 @@ export default function PropertyCard({ property }: { property: Property }) {
   const handleCardClick = (e: React.MouseEvent) => {
     // Prevent navigation if clicking buttons/links (though buttons have stopPropagation, good practice)
     router.push(`/property/${property.id}`);
+  };
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onDelete && confirm("Are you sure you want to delete this property? This action cannot be undone.")) {
+      setIsDeleting(true);
+      await onDelete(property.id);
+      setIsDeleting(false);
+    }
   };
 
   const handleSave = async (e: React.MouseEvent) => {
@@ -110,7 +121,7 @@ export default function PropertyCard({ property }: { property: Property }) {
   return (
     <div
       onClick={handleCardClick}
-      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100 relative cursor-pointer"
+      className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100 relative cursor-pointer ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}
     >
       {/* Image Section */}
       <div className="relative overflow-hidden">
@@ -175,6 +186,16 @@ export default function PropertyCard({ property }: { property: Property }) {
           >
             <Share2 className="w-4 h-4" />
           </button>
+          {onDelete && (
+            <button
+              onClick={handleDelete}
+              className="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all shadow-lg"
+              title="Delete Property"
+            >
+              {/* Inline SVG for Trash/Delete to avoid importing if not available, or use a generic 'X' */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
+            </button>
+          )}
         </div>
 
         {/* Image count badge */}

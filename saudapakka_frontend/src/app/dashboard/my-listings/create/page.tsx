@@ -290,11 +290,29 @@ export default function CreatePropertyPage() {
 
       router.push("/dashboard/my-listings");
     } catch (err: any) {
-      console.error("Submission error:", err.response?.data);
-      const errorMsg = err.response?.data
-        ? Object.entries(err.response.data).map(([k, v]) => `${k}: ${v}`).join("\n")
-        : "Check all required fields and documents.";
-      alert("Error creating listing:\n" + errorMsg);
+      console.error("Submission error details:", {
+        status: err.response?.status,
+        statusText: err.response?.statusText,
+        data: err.response?.data,
+        message: err.message
+      });
+
+      let errorMsg = "Check all required fields and documents.";
+
+      if (err.response?.data) {
+        if (typeof err.response.data === 'string') {
+          errorMsg = err.response.data; // HTML response (e.g. 500/413)
+        } else {
+          // DRF Validation Errors (JSON)
+          errorMsg = Object.entries(err.response.data)
+            .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
+            .join("\n");
+        }
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
+
+      alert(`Error creating listing (${err.response?.status || 'Unknown'}): \n${errorMsg}`);
     } finally {
       setLoading(false);
     }
@@ -349,8 +367,8 @@ export default function CreatePropertyPage() {
                       type="button"
                       onClick={() => setFormData(prev => ({ ...prev, property_type: type.value, subtype: "" }))}
                       className={`group aspect-square rounded-2xl sm:rounded-3xl border-2 p-4 sm:p-6 flex flex-col items-center justify-center gap-2 sm:gap-3 transition-all duration-300 shadow-sm hover:shadow-md ${formData.property_type === type.value
-                          ? "border-[#4A9B6D] bg-[#E8F5E9] scale-[1.02]"
-                          : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                        ? "border-[#4A9B6D] bg-[#E8F5E9] scale-[1.02]"
+                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                         }`}
                     >
                       <span className="text-3xl sm:text-4xl group-hover:scale-110 transition-transform filter drop-shadow-sm">{type.icon}</span>
@@ -376,8 +394,8 @@ export default function CreatePropertyPage() {
                           type="button"
                           onClick={() => setFormData(p => ({ ...p, subtype: opt.value }))}
                           className={`py-2.5 sm:py-3 px-4 rounded-xl border-2 text-sm font-bold transition-all ${formData.subtype === opt.value
-                              ? "border-[#4A9B6D] bg-[#E8F5E9] text-green-800"
-                              : "border-gray-200 bg-white hover:bg-gray-50 text-gray-600"
+                            ? "border-[#4A9B6D] bg-[#E8F5E9] text-green-800"
+                            : "border-gray-200 bg-white hover:bg-gray-50 text-gray-600"
                             }`}
                         >
                           {opt.label}
@@ -633,8 +651,8 @@ export default function CreatePropertyPage() {
                         key={a.key}
                         onClick={() => setFormData(p => ({ ...p, [a.key]: !p[a.key as keyof typeof p] }))}
                         className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between ${formData[a.key as keyof typeof formData]
-                            ? "border-green-500 bg-green-50 text-green-800"
-                            : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                          ? "border-green-500 bg-green-50 text-green-800"
+                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                           }`}
                       >
                         <span className="font-medium text-xs sm:text-sm">{a.label}</span>
@@ -796,15 +814,15 @@ export default function CreatePropertyPage() {
                     <label
                       key={doc.key}
                       className={`group flex items-center justify-between p-4 sm:p-6 bg-white border-2 rounded-2xl cursor-pointer transition-all duration-300 ${legalDocuments[doc.key]
-                          ? "border-[#4A9B6D] bg-[#F1F8F4]"
-                          : "border-gray-100 hover:border-gray-200 hover:shadow-lg"
+                        ? "border-[#4A9B6D] bg-[#F1F8F4]"
+                        : "border-gray-100 hover:border-gray-200 hover:shadow-lg"
                         }`}
                     >
                       <div className="flex items-center gap-3 sm:gap-5 flex-1 min-w-0">
                         <div
                           className={`w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-xl flex items-center justify-center transition-all ${legalDocuments[doc.key]
-                              ? "bg-[#2D5F3F] text-white shadow-lg shadow-green-100"
-                              : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
+                            ? "bg-[#2D5F3F] text-white shadow-lg shadow-green-100"
+                            : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
                             }`}
                         >
                           <FileText className="w-5 h-5 sm:w-7 sm:h-7" />

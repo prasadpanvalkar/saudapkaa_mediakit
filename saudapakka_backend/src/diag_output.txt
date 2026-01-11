@@ -1,0 +1,8 @@
+URL Resolution SUCCESS: Resolves to view 'MandateViewSet'
+URL Kwargs: {'pk': '35248b72-a9f2-4f22-95d6-8de3c48c3733'}
+Database Check: ID exists = False
+Existing Mandate IDs:
+ - 6c508b19-396c-4d84-a683-ee20ec1ec1e9
+ - 0a8924bf-4159-4118-93df-0781f7e58add
+ - 3985280b-117c-4d3f-8072-225d990fd3f5
+ - aa212ca4-044c-4d11-a773-c8d46b92eb5d

@@ -91,7 +91,18 @@ export default function MyListingsPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {myListings.map((property) => (
-                <PropertyCard key={property.id} property={property} />
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  onDelete={async (id) => {
+                    try {
+                      await api.delete(`/api/properties/${id}/`);
+                      setMyListings(prev => prev.filter(p => p.id !== id));
+                    } catch (error: any) {
+                      alert(error.response?.data?.error || "Failed to delete property");
+                    }
+                  }}
+                />
               ))}
             </div>
           )}

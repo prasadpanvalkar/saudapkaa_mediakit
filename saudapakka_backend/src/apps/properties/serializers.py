@@ -180,6 +180,18 @@ class PropertySerializer(serializers.ModelSerializer):
             status__in=['ACTIVE', 'PENDING']
         ).exists()
 
+    def to_representation(self, instance):
+        """
+        Custom representation to handle fallback logic for fields.
+        """
+        ret = super().to_representation(instance)
+        
+        # Fallback for WhatsApp number: specific -> owner's phone
+        if not ret.get('whatsapp_number') and instance.owner:
+            ret['whatsapp_number'] = instance.owner.phone_number
+            
+        return ret
+
 class AdminPropertySerializer(PropertySerializer):
     """
     Serializer for Admin access, including full owner details (contact info).

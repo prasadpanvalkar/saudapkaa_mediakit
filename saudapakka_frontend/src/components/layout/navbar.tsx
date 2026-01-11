@@ -37,12 +37,7 @@ export default function Navbar() {
             >
               Buy
             </Link>
-            <Link
-              href="/search?type=SELL"
-              className="text-gray-700 hover:text-[#2D5F3F] transition-colors font-medium text-sm lg:text-base"
-            >
-              Sell
-            </Link>
+
             <Link
               href="/search?type=RENT"
               className="text-gray-700 hover:text-[#2D5F3F] transition-colors font-medium text-sm lg:text-base"

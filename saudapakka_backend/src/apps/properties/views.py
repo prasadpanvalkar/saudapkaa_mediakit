@@ -57,7 +57,12 @@ class PropertyViewSet(viewsets.ModelViewSet):
         if user.is_staff:
             return base_query.order_by('-created_at')
         
-        # Public & Authenticated Users: Only show VERIFIED properties
+        # Public & Authenticated Users: Only show VERIFIED properties or their own properties
+        if user.is_authenticated:
+            return base_query.filter(
+                Q(verification_status='VERIFIED') | Q(owner=user)
+            ).order_by('-created_at').distinct()
+            
         return base_query.filter(verification_status='VERIFIED').order_by('-created_at')
 
     def perform_create(self, serializer):
@@ -168,16 +173,33 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         property_obj = self.get_object()
+        user = request.user
         
-        # Security: The 'IsOwnerOrReadOnly' permission already handles basic ownership,
-        # but we add a business logic check here.
+        # 1. Admin can delete anything
+        if user.is_staff:
+             self.perform_destroy(property_obj)
+             return Response({"message": "Property deleted successfully by Admin."}, status=status.HTTP_204_NO_CONTENT)
+
+        # 2. Owner can delete their own
+        if property_obj.owner == user:
+             # Check for active mandates (prevent deletion if active mandate exists)
+             if property_obj.mandates.filter(status__in=['ACTIVE', 'PENDING', 'SIGNED']).exists():
+                 return Response(
+                     {"error": "Cannot delete a property with an active/pending mandate. Please cancel the mandate first."},
+                     status=status.HTTP_400_BAD_REQUEST
+                 )
+             self.perform_destroy(property_obj)
+             return Response({"message": "Property deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
         
-        # Check if the property has an ACTIVE mandate (Safety Check)
-        if property_obj.mandates.filter(status='SIGNED').exists():
-            return Response(
-                {"error": "Cannot delete a property with an active signed mandate. Please cancel the mandate first."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-            
-        self.perform_destroy(property_obj)
-        return Response({"message": "Property deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+        # 3. Brokers: Can delete properties linked to their active mandates.
+        # Check if this user is a broker for an ACTIVE mandate on this property.
+        is_broker_linked = property_obj.mandates.filter(
+            broker=user, 
+            status__in=['ACTIVE', 'PENDING']
+        ).exists()
+        
+        if is_broker_linked:
+             self.perform_destroy(property_obj)
+             return Response({"message": "Property deleted by authorized Broker."}, status=status.HTTP_204_NO_CONTENT)
+
+        return Response({"error": "Unauthorized: You do not have permission to delete this property."}, status=403)

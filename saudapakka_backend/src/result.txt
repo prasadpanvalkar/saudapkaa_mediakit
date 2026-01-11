@@ -1,0 +1,2 @@
+LATEST_NOTIFICATION: ID=29 | To=admin@example.com | Title='New Platform Mandate Request' | Created=2026-01-11 21:28:38.549267+00:00
+LATEST_MANDATE: ID=705f28c9-a4ec-408c-9b78-8a58523a5d37 | Type=WITH_PLATFORM | InitiatedBy=SELLER | Created=2026-01-11 21:28:38.467763+00:00

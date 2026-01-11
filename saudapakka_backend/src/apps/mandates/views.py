@@ -15,9 +15,6 @@ class MandateViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if not user or not user.is_authenticated:
-            return Mandate.objects.none()
-            
         if user.is_staff:
             return Mandate.objects.all()
             
@@ -38,15 +35,17 @@ class MandateViewSet(viewsets.ModelViewSet):
         user = self.request.user
         initiated_by_payload = self.request.data.get('initiated_by')
         
+        print(f"DEBUG: Mandate Creation Started by {user.email} ({user.id})")
+
         # Enforce server-side validation for initiated_by
         if user.is_active_broker:
              initiated_by = 'BROKER'
         elif user.is_active_seller:
              initiated_by = 'SELLER'
         else:
-             # Default fallback or error? Let's respect payload if it matches role, else force logic
-             # If user is BOTH, payload decides.
              initiated_by = initiated_by_payload
+        
+        print(f"DEBUG: initiated_by determined as: {initiated_by}")
 
         # Helper to ensure data integrity
         if initiated_by == 'BROKER' and not user.is_active_broker:
@@ -68,9 +67,6 @@ class MandateViewSet(viewsets.ModelViewSet):
             
             seller = property_instance.owner
             
-            # Map signature: BROKER is initiating, so signature in payload maps to broker_signature
-            # Note: request.FILES logic happens in serializer usually, but we can double check
-            
             sys_broker_sig = self.request.FILES.get('broker_signature') or self.request.data.get('broker_signature')
             
             mandate = serializer.save(
@@ -80,9 +76,11 @@ class MandateViewSet(viewsets.ModelViewSet):
                 broker_signature=sys_broker_sig 
             )
             recipient = mandate.seller
+            print(f"DEBUG: Broker initiated. Recipient (Seller): {recipient}")
 
         elif initiated_by == 'SELLER':
             deal_type = self.request.data.get('deal_type')
+            print(f"DEBUG: Seller initiated. Deal Type: {deal_type}")
             
             sys_seller_sig = self.request.FILES.get('seller_signature') or self.request.data.get('seller_signature')
 
@@ -95,6 +93,7 @@ class MandateViewSet(viewsets.ModelViewSet):
                  )
                  # Notify all admins
                  admins = User.objects.filter(is_superuser=True)
+                 print(f"DEBUG: Platform deal. Notifying {admins.count()} admins.")
                  for admin in admins:
                      self.notify_user(
                         recipient=admin,
@@ -104,6 +103,7 @@ class MandateViewSet(viewsets.ModelViewSet):
                      )
             else:
                 broker_id = self.request.data.get('broker')
+                print(f"DEBUG: Broker ID from request: {broker_id}")
                 if not broker_id:
                      raise ValidationError("You must specify which Broker you are hiring.")
                 mandate = serializer.save(
@@ -112,15 +112,21 @@ class MandateViewSet(viewsets.ModelViewSet):
                     seller_signature=sys_seller_sig
                 )
                 recipient = mandate.broker
+                print(f"DEBUG: Seller initiated with Broker. Recipient (Broker): {recipient}")
 
         # Send Notification to Partner (if not platform)
         if recipient:
+            print(f"DEBUG: Sending notification to {recipient.email}")
             self.notify_user(
                 recipient=recipient,
                 title="New Mandate Request",
                 message=f"{user.full_name} has initiated a mandate request for {mandate.property_item.title}.",
                 action_url=f"/dashboard/mandates/{mandate.id}"
             )
+        elif deal_type == 'WITH_PLATFORM':
+            print("DEBUG: Platform Deal - Admins already notified.")
+        else:
+            print("DEBUG: WARNING - No recipient determined for this mandate!")
 
     @action(detail=True, methods=['post'])
     def accept_and_sign(self, request, pk=None):
