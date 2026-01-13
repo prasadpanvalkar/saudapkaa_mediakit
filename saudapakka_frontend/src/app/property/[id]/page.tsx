@@ -700,7 +700,7 @@ export default function PropertyDetailsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-2">
                   {[
                     'building_commencement_certificate',
                     'building_completion_certificate',
@@ -717,20 +717,17 @@ export default function PropertyDetailsPage() {
                     const fileUrl = property[key as keyof PropertyDetail];
                     if (!fileUrl) return null;
                     return (
-                      <a
+                      <div
                         key={key}
-                        href={typeof fileUrl === 'string' ? fileUrl : '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex flex-col items-center justify-center p-3 bg-white border border-green-100 rounded-xl hover:shadow-md hover:border-green-300 transition-all text-center group"
+                        className="flex items-center gap-3 p-3 bg-white border border-green-100 rounded-xl"
                       >
-                        <FileText className="w-6 h-6 text-green-600 mb-2 group-hover:scale-110 transition-transform" />
-                        <span className="text-[10px] sm:text-xs font-medium text-gray-700 leading-tight">
+                        <div className="flex-shrink-0">
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700">
                           {formatDocumentName(key)}
-
                         </span>
-                        <span className="text-[9px] text-green-500 mt-1 font-semibold">Tap to View</span>
-                      </a>
+                      </div>
                     );
                   })}
                 </div>
@@ -848,28 +845,7 @@ export default function PropertyDetailsPage() {
               )}
 
               {/* Legal Documents - Mobile */}
-              {(property.has_7_12 || property.has_mojani) && (
-                <div className="sm:hidden bg-white px-4 py-4 mb-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Shield className="w-5 h-5 text-[#4A9B6D]" />
-                    <h3 className="font-bold text-base text-gray-900">Legal Documents</h3>
-                  </div>
-                  <div className="space-y-2">
-                    {property.has_7_12 && (
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 px-3 py-2.5 rounded-lg">
-                        <Check className="w-4 h-4 flex-shrink-0" />
-                        <span>7/12 Extract Available</span>
-                      </div>
-                    )}
-                    {property.has_mojani && (
-                      <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 px-3 py-2.5 rounded-lg">
-                        <Check className="w-4 h-4 flex-shrink-0" />
-                        <span>Mojani Map Available</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+
 
               {/* Location & Map */}
               <div className="bg-white sm:rounded-2xl p-4 sm:p-6 md:p-8 sm:shadow-lg mb-4 sm:mb-6">
@@ -1026,58 +1002,7 @@ export default function PropertyDetailsPage() {
                   </div>
 
                   {/* Legal Verification Documents */}
-                  {(property.verification_status === 'VERIFIED') && (
-                    <div className="mt-6 pt-6 border-t border-gray-200">
-                      <h3 className="font-semibold text-sm text-gray-900 mb-3 flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-[#4A9B6D]" />
-                        Legal Documents (Verified)
-                      </h3>
-                      <div className="grid grid-cols-1 gap-2">
-                        {[
-                          'doc_7_12_or_pr_card',
-                          'mojani_nakasha',
-                          'building_commencement_certificate',
-                          'building_completion_certificate',
-                          'layout_sanction',
-                          'layout_order',
-                          'na_order_or_gunthewari',
-                          'title_search_report'
-                        ].map((docKey) => {
-                          const url = property[docKey as keyof PropertyDetail];
-                          if (!url || typeof url !== 'string') return null;
-                          return (
-                            <div
-                              key={docKey}
-                              className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group cursor-default"
-                            >
-                              <div className="flex items-center gap-2 text-sm text-green-700 font-medium">
-                                <Check className="w-4 h-4 text-[#4A9B6D]" />
-                                {formatDocumentName(docKey)}
-                              </div>
-                              {/* Removed ExternalLink for privacy */}
-                              <div className="flex items-center gap-1.5 bg-white/50 px-2 py-0.5 rounded text-[10px] sm:text-xs text-green-800 font-semibold border border-green-100">
-                                <CheckCircle className="w-3 h-3" />
-                                Verified
-                              </div>
-                            </div>
-                          );
-                        })}
-                        {/* Fallback if no specific docs but flags are true (Likely manually verified) */}
-                        {!property.doc_7_12_or_pr_card && property.has_7_12 && (
-                          <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 p-2.5 rounded-lg">
-                            <Check className="w-4 h-4 flex-shrink-0" />
-                            <span>7/12 Extract Verified</span>
-                          </div>
-                        )}
-                        {!property.mojani_nakasha && property.has_mojani && (
-                          <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 p-2.5 rounded-lg">
-                            <Check className="w-4 h-4 flex-shrink-0" />
-                            <span>Mojani Map Verified</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+
 
 
                 </div>
