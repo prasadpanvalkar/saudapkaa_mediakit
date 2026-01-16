@@ -1,0 +1,1141 @@
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mandates, notifications, properties, sessions, users
+Running migrations:
+  No migrations to apply.
+INFO 2026-01-15 09:00:17,518 autoreload 39 129191449996160 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 09:00:18
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 09:01:23] INFO [django.server:212] "OPTIONS /api/properties/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:23] INFO [django.server:212] "OPTIONS /api/user/me/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:23] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:01:23] INFO [django.server:212] "GET /api/properties/ HTTP/1.1" 200 52492
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/properties/my_listings/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/properties/my_listings/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:01:32] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:02:03] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:02:03] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:02:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:02:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:03:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:03:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:03:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:03:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:04:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:04:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:04:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:04:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:05:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:05:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:06:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:06:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:06:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:06:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:07:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:07:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:07:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:07:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:08:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:08:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:09:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:09:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:10:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:10:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:11:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:11:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:12:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:12:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:13:09] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:13:09] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:13:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:13:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:13:45] INFO [django.server:212] "OPTIONS /api/properties/my_saved/ HTTP/1.1" 200 0
+[15/Jan/2026 09:13:45] INFO [django.server:212] "OPTIONS /api/properties/my_saved/ HTTP/1.1" 200 0
+[15/Jan/2026 09:13:45] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 09:13:45] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 09:13:45] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:13:45] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:13:46] INFO [django.server:212] "GET /properties/1000229850.jpg HTTP/1.1" 200 10632
+[15/Jan/2026 09:13:46] INFO [django.server:212] "GET /properties/1000218422.jpg HTTP/1.1" 200 6443
+[15/Jan/2026 09:13:46] INFO [django.server:212] "GET /properties/2_bhk_apartment-for-sale-ramanag_3_vLH0nhx.jpg HTTP/1.1" 200 36882
+[15/Jan/2026 09:13:46] INFO [django.server:212] "GET /properties/1000218337.jpg HTTP/1.1" 200 3155759
+[15/Jan/2026 09:14:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:14:02] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:14:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:14:32] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:15:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:15:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:16:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:16:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:17:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:17:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:18:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:18:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:17] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:19:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:17] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 09:19:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:18] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 09:19:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:18] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:19:18] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 09:19:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:19:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:20:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:20:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:20:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:20:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:21:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:21:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:21:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:21:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:46] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:22:46] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:46] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:46] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:46] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:22:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:06] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:23:06] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:06] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:06] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:06] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:23:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:24:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:24:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:25:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:25:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:25:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:25:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:26:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:26:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:26:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:26:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:27:10] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:27:10] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:27:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:27:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:28:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:28:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:28:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:28:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:29:08] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:29:08] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+WARNING 2026-01-15 09:29:13,367 log 39 129190651229888 Not Found: /
+[15/Jan/2026 09:29:13] WARNING [django.server:212] "GET / HTTP/1.1" 404 3127
+WARNING 2026-01-15 09:29:13,489 log 39 129190651229888 Not Found: /favicon.ico
+[15/Jan/2026 09:29:13] WARNING [django.server:212] "GET /favicon.ico HTTP/1.1" 404 3176
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /admin/ HTTP/1.1" 200 11598
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2682
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/css/base.css HTTP/1.1" 200 21544
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/css/responsive.css HTTP/1.1" 200 17905
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[15/Jan/2026 09:29:20] INFO [django.server:212] "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59202
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/inlines.js HTTP/1.1" 200 15526
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9042
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/actions.js HTTP/1.1" 200 8067
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/css/widgets.css HTTP/1.1" 200 11800
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 560
+[15/Jan/2026 09:29:23] INFO [django.server:212] "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+[15/Jan/2026 09:29:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:29:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:30:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:30:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:31:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:31:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:32:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:32:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:32:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:32:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:33:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:33:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:34:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:34:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:35:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:35:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:36:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:36:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:37:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:37:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:38:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:38:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:00] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:39:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:39:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:40:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:40:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:40:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:40:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:33] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:41:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:41:33] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:03] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:03] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:04] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:42:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:34] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:42:34] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:43:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:43:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:43:35] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:43:35] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:44:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:44:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:44:35] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:44:35] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:45:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:45:05] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:45:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:45:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:46:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:46:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:47:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:47:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:48:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:48:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:49:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:49:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:50:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:50:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:51:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:51:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:52:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:52:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:53:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:53:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:40] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:40] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:59] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 09:54:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:54:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:55:28] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:55:28] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:55:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:55:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:56:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:56:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:57:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:58:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:58:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:58:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:58:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:59:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:59:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:59:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 09:59:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:00:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:00:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:00:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:00:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:01:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:01:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:01:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:01:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:02:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:02:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:02:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:02:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:03:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:03:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:03:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:03:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:04:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:04:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:04:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:04:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:05:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:05:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:05:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:05:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:06:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:06:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:06:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:06:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+WARNING 2026-01-15 10:07:24,322 log 39 129190623954624 Bad Request: /api/properties/
+[15/Jan/2026 10:07:24] WARNING [django.server:212] "POST /api/properties/ HTTP/1.1" 400 52
+[15/Jan/2026 10:07:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:07:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+WARNING 2026-01-15 10:07:59,679 log 39 129190623954624 Bad Request: /api/properties/
+[15/Jan/2026 10:07:59] WARNING [django.server:212] "POST /api/properties/ HTTP/1.1" 400 46
+[15/Jan/2026 10:08:04] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:08:04] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:08:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:08:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:08:51] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 10:08:51] INFO [django.server:212] "GET /api/properties/my_saved/ HTTP/1.1" 200 4193
+[15/Jan/2026 10:08:51] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 10:08:51] INFO [django.server:212] "GET /api/properties/my_listings/ HTTP/1.1" 200 44104
+[15/Jan/2026 10:09:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:09:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:09:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:09:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:10:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:11:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:11:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:12:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:12:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:12:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:12:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+ERROR 2026-01-15 10:12:38,573 log 39 129190267451072 Internal Server Error: /api/properties/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (fefdad90-9530-49b3-8d7c-fac3669720e3, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:12:38.482194+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_40P5e5H.jpeg, properties/docs/2_hHj9X4N.jpeg, properties/docs/3_YgwOgfw.jpeg, , properties/docs/4_5uOftzN.jpeg, properties/docs/3_nozYB6U.jpeg, properties/docs/2_5bAuzF0.jpeg, properties/docs/5_ZNrXV1m.jpeg, , , properties/docs/3_FdrJKnK.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/app/apps/properties/views.py", line 78, in perform_create
+    property_instance = serializer.save(owner=user, verification_status='PENDING')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/apps/properties/models.py", line 155, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 822, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1823, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (fefdad90-9530-49b3-8d7c-fac3669720e3, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:12:38.482194+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_40P5e5H.jpeg, properties/docs/2_hHj9X4N.jpeg, properties/docs/3_YgwOgfw.jpeg, , properties/docs/4_5uOftzN.jpeg, properties/docs/3_nozYB6U.jpeg, properties/docs/2_5bAuzF0.jpeg, properties/docs/5_ZNrXV1m.jpeg, , , properties/docs/3_FdrJKnK.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+[15/Jan/2026 10:12:38] ERROR [django.server:212] "POST /api/properties/ HTTP/1.1" 500 290484
+ERROR 2026-01-15 10:12:57,976 log 39 129190267451072 Internal Server Error: /api/properties/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (16642d06-82b5-4b0b-ab3c-fbd9989657f2, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:12:57.941092+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_jIPD44I.jpeg, properties/docs/2_Z5IzaxI.jpeg, properties/docs/3_BYU7hrB.jpeg, , properties/docs/4_HLb20AS.jpeg, properties/docs/3_nyAn2cB.jpeg, properties/docs/2_tdbvFdY.jpeg, properties/docs/5_spgvpMh.jpeg, , , properties/docs/3_397GlQF.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/app/apps/properties/views.py", line 78, in perform_create
+    property_instance = serializer.save(owner=user, verification_status='PENDING')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/apps/properties/models.py", line 155, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 822, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1823, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (16642d06-82b5-4b0b-ab3c-fbd9989657f2, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:12:57.941092+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_jIPD44I.jpeg, properties/docs/2_Z5IzaxI.jpeg, properties/docs/3_BYU7hrB.jpeg, , properties/docs/4_HLb20AS.jpeg, properties/docs/3_nyAn2cB.jpeg, properties/docs/2_tdbvFdY.jpeg, properties/docs/5_spgvpMh.jpeg, , , properties/docs/3_397GlQF.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+[15/Jan/2026 10:12:57] ERROR [django.server:212] "POST /api/properties/ HTTP/1.1" 500 290484
+[15/Jan/2026 10:13:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:13:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+ERROR 2026-01-15 10:13:08,355 log 39 129190267451072 Internal Server Error: /api/properties/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (e6815cb3-3339-49ee-9734-970e9d369cb3, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:13:08.321989+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_21UJ9R4.jpeg, properties/docs/2_YlevXZQ.jpeg, properties/docs/3_bftC26x.jpeg, , properties/docs/4_5EiSaeP.jpeg, properties/docs/3_8sUIr2S.jpeg, properties/docs/2_N0YOmSl.jpeg, properties/docs/5_WyYK0Wm.jpeg, , , properties/docs/3_2AK6OoL.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/app/apps/properties/views.py", line 78, in perform_create
+    property_instance = serializer.save(owner=user, verification_status='PENDING')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/apps/properties/models.py", line 155, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 822, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1823, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: null value in column "has_children_park" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (e6815cb3-3339-49ee-9734-970e9d369cb3, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, 1.00, 2.00, null, UNFURNISHED, 450000.00, 450000.00, 0.00, MONTHLY, Raju park, V8GR+5P7, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431005, 19.875177573248187, 75.34201825770245, , null, null, null, READY, null, 0, t, t, f, f, f, t, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:13:08.321989+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Area: 1 sq..., null, properties/docs/1_21UJ9R4.jpeg, properties/docs/2_YlevXZQ.jpeg, properties/docs/3_bftC26x.jpeg, , properties/docs/4_5EiSaeP.jpeg, properties/docs/3_8sUIr2S.jpeg, properties/docs/2_N0YOmSl.jpeg, properties/docs/5_WyYK0Wm.jpeg, , , properties/docs/3_2AK6OoL.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+[15/Jan/2026 10:13:08] ERROR [django.server:212] "POST /api/properties/ HTTP/1.1" 500 290477
+[15/Jan/2026 10:13:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:13:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:14:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:14:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:14:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:14:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:15:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:15:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:15:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:15:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:16:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:16:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:17:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:17:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:18:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:18:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:19:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:19:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+INFO 2026-01-15 10:20:50,086 autoreload 39 129191449996160 /app/apps/properties/models.py changed, reloading.
+INFO 2026-01-15 10:20:52,022 autoreload 98 126592672787328 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:20:52
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 10:21:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:21:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:22:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:22:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mandates, notifications, properties, sessions, users
+Running migrations:
+  No migrations to apply.
+  Your models in app(s): 'properties' have changes that are not yet reflected in a migration, and so won't be applied.
+  Run 'manage.py makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
+INFO 2026-01-15 10:23:27,080 autoreload 39 126817985166208 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:23:27
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 10:23:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:23:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:06] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 10:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:24:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:25:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:25:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:25:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:25:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:26:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:26:07] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+WARNING 2026-01-15 10:26:30,467 log 39 126817185822400 Bad Request: /api/properties/
+[15/Jan/2026 10:26:30] WARNING [django.server:212] "POST /api/properties/ HTTP/1.1" 400 46
+[15/Jan/2026 10:26:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:26:37] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:27:08] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:27:08] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:27:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:27:38] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:28:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:28:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:20] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:20] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:30] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 10:29:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:29:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:30:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:30:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:30:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:30:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+ERROR 2026-01-15 10:30:44,970 log 39 126817185822400 Internal Server Error: /api/properties/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "super_builtup_area" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (00e32a63-9d30-4c69-b16d-1068164de5a5, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, null, null, null, UNFURNISHED, 4500000.00, null, 0.00, MONTHLY, , 18-26, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431001, 19.877464573373857, 75.34068788334073, , null, null, null, READY, null, 0, f, f, f, f, f, f, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:30:44.920452+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Contact us..., null, properties/docs/userflow1.jpeg, properties/docs/userflow2.jpeg, properties/docs/userflow1_tw7cgga.jpeg, , properties/docs/userflow2_dq7buNQ.jpeg, properties/docs/userflow1_CQRTov2.jpeg, properties/docs/userflow1_6409C0P.jpeg, properties/docs/userflow3.jpeg, properties/docs/userflow2_CRy3uxe.jpeg, , properties/docs/userflow2_nozMvNi.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/app/apps/properties/views.py", line 78, in perform_create
+    property_instance = serializer.save(owner=user, verification_status='PENDING')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/apps/properties/models.py", line 153, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 822, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1823, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: null value in column "super_builtup_area" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (00e32a63-9d30-4c69-b16d-1068164de5a5, Residential Plot for Sale in Chhatrapati Sambhajinagar, Chhatrap..., PLOT, 1, 1, 0, null, null, null, UNFURNISHED, 4500000.00, null, 0.00, MONTHLY, , 18-26, Chhatrapati Sambhajinagar, Chhatrapati Sambhajinagar, 431001, 19.877464573373857, 75.34068788334073, , null, null, null, READY, null, 0, f, f, f, f, f, f, t, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 10:30:44.920452+00, ed1d87c4-1f9c-406d-ad92-485874ed5d88, SALE, Plot available for sale in Chhatrapati Sambhajinagar. Contact us..., null, properties/docs/userflow1.jpeg, properties/docs/userflow2.jpeg, properties/docs/userflow1_tw7cgga.jpeg, , properties/docs/userflow2_dq7buNQ.jpeg, properties/docs/userflow1_CQRTov2.jpeg, properties/docs/userflow1_6409C0P.jpeg, properties/docs/userflow3.jpeg, properties/docs/userflow2_CRy3uxe.jpeg, , properties/docs/userflow2_nozMvNi.jpeg, null, null, null, null, null, null, null, null, null, null).
+
+[15/Jan/2026 10:30:44] ERROR [django.server:212] "POST /api/properties/ HTTP/1.1" 500 290034
+[15/Jan/2026 10:31:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:31:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:31:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:31:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:32:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:32:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:32:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:32:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:33:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:33:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:34:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:34:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:35:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:35:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:36:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:36:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:37:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:37:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:38:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:38:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:39:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:39:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:40:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:40:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:41:40] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:41:40] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:42:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:42:01] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:42:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:42:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:00] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:29] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:43:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:44:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:44:30] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:44:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:44:59] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:45:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:45:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:45:59] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:45:59] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:04] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:04] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:04] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:04] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:05] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:05] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mandates, notifications, properties, sessions, users
+Running migrations:
+  No migrations to apply.
+INFO 2026-01-15 10:46:17,200 autoreload 39 126850388265856 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:46:17
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mandates, notifications, properties, sessions, users
+Running migrations:
+  No migrations to apply.
+INFO 2026-01-15 10:46:21,836 autoreload 39 135658032618368 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:46:22
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 10:46:22] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:22] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/properties/property/add/ HTTP/1.1" 200 59150
+[15/Jan/2026 10:46:26] INFO [django.server:212] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[15/Jan/2026 10:46:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:46:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:47:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:47:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:48:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:48:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:49:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:49:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:50:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:50:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:51:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:51:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:52:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:52:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:53:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:53:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+INFO 2026-01-15 10:54:44,058 autoreload 39 135658032618368 /app/apps/properties/models.py changed, reloading.
+INFO 2026-01-15 10:54:45,881 autoreload 60 135268846869376 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:54:47
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 10:54:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:54:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+INFO 2026-01-15 10:54:59,331 autoreload 60 135268846869376 /app/apps/properties/serializers.py changed, reloading.
+INFO 2026-01-15 10:55:00,453 autoreload 78 135131565812608 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 10:55:00
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 10:55:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:55:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:56:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:56:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:57:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:57:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:58:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:58:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:59:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 10:59:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:00:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:00:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:01:50] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 11:01:50] INFO [django.server:212] "OPTIONS /api/notifications/ HTTP/1.1" 200 0
+[15/Jan/2026 11:01:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:01:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:02:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:02:50] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:03:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:03:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:04:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:04:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:05:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:05:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:06:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:06:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mandates, notifications, properties, sessions, users
+Running migrations:
+  No migrations to apply.
+INFO 2026-01-15 11:07:23,527 autoreload 39 125962403625856 Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 15, 2026 - 11:07:24
+Django version 5.0.2, using settings 'saudapakka.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+[15/Jan/2026 11:07:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:07:31] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:07:48] INFO [django.server:212] "OPTIONS /api/user/me/ HTTP/1.1" 200 0
+[15/Jan/2026 11:07:48] INFO [django.server:212] "GET /api/user/me/ HTTP/1.1" 200 265
+[15/Jan/2026 11:07:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:07:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:07:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:07:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:08:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:08:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:08:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:08:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:09:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:09:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:09:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:09:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:10:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:10:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:10:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:10:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:11:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:11:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:11:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:11:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:12:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:12:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:12:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:12:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:13:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:13:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:13:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:13:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:14:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:14:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:14:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:14:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:15:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:15:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:15:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:15:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:16:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:16:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:16:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:16:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:17:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:17:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:17:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:17:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:18:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:18:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:18:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:18:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:19:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:19:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:19:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:19:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:20:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:20:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:20:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:20:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:21:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:21:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:21:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:21:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:22:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:22:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:22:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:22:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:23:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:23:18] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:23:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:23:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:24:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:24:19] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:24:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:24:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:25:05] INFO [django.server:212] "OPTIONS /api/properties/ HTTP/1.1" 200 0
+ERROR 2026-01-15 11:25:05,991 log 39 125961604429504 Internal Server Error: /api/properties/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "has_one_gate_entry" of relation "properties_property" does not exist
+LINE 1: ..."has_piped_gas", "has_wifi", "has_drainage_line", "has_one_g...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/app/apps/properties/views.py", line 78, in perform_create
+    property_instance = serializer.save(owner=user, verification_status='PENDING')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/apps/properties/models.py", line 165, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 822, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1823, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column "has_one_gate_entry" of relation "properties_property" does not exist
+LINE 1: ..."has_piped_gas", "has_wifi", "has_drainage_line", "has_one_g...
+                                                             ^
+
+[15/Jan/2026 11:25:05] ERROR [django.server:212] "POST /api/properties/ HTTP/1.1" 500 289038
+[15/Jan/2026 11:25:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:25:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:25:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:25:47] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:26:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:26:17] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:26:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:26:48] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:27:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679
+[15/Jan/2026 11:27:49] INFO [django.server:212] "GET /api/notifications/ HTTP/1.1" 200 1679

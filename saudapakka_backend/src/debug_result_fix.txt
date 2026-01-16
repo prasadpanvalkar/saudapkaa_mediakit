@@ -1,0 +1,4 @@
+--- Starting Serialization Debug ---
+Total properties: 17
+
+Debug Complete. Success: 17, Fail: 0

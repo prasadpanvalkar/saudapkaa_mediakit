@@ -28,7 +28,7 @@ export interface Property {
   is_saved?: boolean; // In case backend provides it later
 }
 
-export default function PropertyCard({ property, onDelete }: { property: Property; onDelete?: (id: string) => void }) {
+export default function PropertyCard({ property, onDelete, actionSlot }: { property: Property; onDelete?: (id: string) => void; actionSlot?: React.ReactNode }) {
   const router = useRouter();
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(property.is_saved || false);
@@ -163,7 +163,7 @@ export default function PropertyCard({ property, onDelete }: { property: Propert
         <div className="absolute top-3 right-3">
           <span className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg ${property.listing_type === "SALE"
             ? "bg-[#2D5F3F] text-white"
-            : "bg-amber-500 text-white"
+            : "bg-amber-50 text-white"
             }`}>
             For {property.listing_type === "SALE" ? "Sale" : "Rent"}
           </span>
@@ -260,6 +260,7 @@ export default function PropertyCard({ property, onDelete }: { property: Propert
             }`}>
             {property.property_status === "READY" || !property.property_status ? "Ready to Move" : property.property_status}
           </span>
+          {actionSlot && actionSlot}
           <button className="flex-1 bg-gradient-to-r from-[#2D5F3F] to-[#4A9B6D] text-white py-2.5 rounded-xl hover:from-[#1B3A2C] hover:to-[#2D5F3F] transition-all duration-300 font-semibold text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
             View Details
           </button>

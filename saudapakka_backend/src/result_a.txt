@@ -1,0 +1,5 @@
+Columns starting with 'a':
+Name: age_of_construction, Default: None, Nullable: NO
+Name: address_line, Default: None, Nullable: NO
+Name: area_unit, Default: None, Nullable: NO
+Name: availability_status, Default: 'READY'::character varying, Nullable: NO

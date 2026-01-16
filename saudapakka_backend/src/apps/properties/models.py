@@ -37,6 +37,7 @@ class Property(models.Model):
         ('VILLA', 'Villa'),
         # Plot Sub-categories
         ('RES_PLOT', 'Residential Plot'),
+        ('RES_PLOT_GUNTHEWARI', 'Residential Plot (Gunthewari)'),
         ('COM_PLOT', 'Commercial Plot'),
         # Land Sub-categories
         ('AGRI_LAND', 'Agricultural Land'),
@@ -50,25 +51,26 @@ class Property(models.Model):
     property_type = models.CharField(max_length=50, choices=PROPERTY_TYPE_CHOICES)
     sub_type = models.CharField(max_length=50, choices=SUB_TYPE_CHOICES, null=True, blank=True)
 
-    bhk_config = models.IntegerField(
-        default=0,
-        choices=[(0, 'N/A'), (1, '1 BHK'), (2, '2 BHK'), (3, '3 BHK'), (4, '4+ BHK'), (5, '5+ BHK')],
+    bhk_config = models.DecimalField(
+        max_digits=3, 
+        decimal_places=1,
+        default=0.0,
         null=True, blank=True,
-        help_text="Number of bedrooms. Use 0 or N/A for plots/land/commercial properties."
+        help_text="Number of bedrooms. Use 0.5 for 1RK, 1-10 for standard BHK, 0 for N/A"
     )
-    bathrooms = models.IntegerField(default=1)
-    balconies = models.IntegerField(default=0)
+    bathrooms = models.IntegerField(null=True, blank=True, default=None)
+    balconies = models.IntegerField(null=True, blank=True, default=None)
     
     # Area Details
-    super_builtup_area = models.DecimalField(max_digits=12, decimal_places=2, help_text="Total saleable area")
-    carpet_area = models.DecimalField(max_digits=12, decimal_places=2, help_text="RERA usable area")
+    super_builtup_area = models.DecimalField(max_digits=12, decimal_places=2, help_text="Total saleable area", null=True, blank=True)
+    carpet_area = models.DecimalField(max_digits=12, decimal_places=2, help_text="RERA usable area", null=True, blank=True)
     plot_area = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     
     furnishing_status = models.CharField(max_length=20, choices=[
         ('UNFURNISHED', 'Unfurnished'),
         ('SEMI_FURNISHED', 'Semi-Furnished'),
         ('FULLY_FURNISHED', 'Fully Furnished')
-    ], default='UNFURNISHED')
+    ], null=True, blank=True)
 
     # --- 2. Pricing & Financials ---
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -87,7 +89,7 @@ class Property(models.Model):
     landmarks = models.TextField(blank=True, help_text="Nearby Schools, Metro, etc.")
 
     # --- 4. Floor & Building ---
-    specific_floor = models.IntegerField(null=True, blank=True)
+    specific_floor = models.CharField(max_length=50, null=True, blank=True)
     total_floors = models.IntegerField(null=True, blank=True)
     facing = models.CharField(max_length=20, choices=[
         ('NORTH', 'North'), ('SOUTH', 'South'), ('EAST', 'East'), ('WEST', 'West'),
@@ -117,6 +119,16 @@ class Property(models.Model):
     has_piped_gas = models.BooleanField(default=False)
     has_wifi = models.BooleanField(default=False)
 
+    # --- Plot Amenities ---
+    has_drainage_line = models.BooleanField(default=False)
+    has_one_gate_entry = models.BooleanField(default=False)
+    has_jogging_park = models.BooleanField(default=False)
+    has_children_park = models.BooleanField(default=False)
+    has_temple = models.BooleanField(default=False)
+    has_water_line = models.BooleanField(default=False)
+    has_street_light = models.BooleanField(default=False)
+    has_internal_roads = models.BooleanField(default=False)
+
     # --- 7. Media & Docs ---
     video_url = models.URLField(blank=True, null=True, help_text="YouTube/Hosted link")
     floor_plan = models.ImageField(upload_to='properties/floor_plans/', null=True, blank=True)
@@ -142,16 +154,19 @@ class Property(models.Model):
     ], default='OWNER')
     whatsapp_number = models.CharField(max_length=15, blank=True, null=True)
 
-    # --- System Fields ---
+    # System Fields & Admin
     verification_status = models.CharField(max_length=20, choices=[
         ('PENDING', 'Pending'), ('VERIFIED', 'Verified'), ('REJECTED', 'Rejected')
     ], default='PENDING')
+    is_featured = models.BooleanField(default=False, help_text="Featured listings appear prominently on homepage")
+    is_verified = models.BooleanField(default=False, help_text="Admin-verified property")
+    priority_listing = models.BooleanField(default=False, help_text="Higher priority in search results")
+    admin_notes = models.TextField(blank=True, null=True, help_text="Internal admin notes (not visible to users)")
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # Auto-calculate Price per Sq.ft safely
-        if self.total_price and self.super_builtup_area and self.super_builtup_area > 0:
-            self.price_per_sqft = self.total_price / self.super_builtup_area
+        # Auto-calculation logic removed to allow manual entry
         super().save(*args, **kwargs)
 
 

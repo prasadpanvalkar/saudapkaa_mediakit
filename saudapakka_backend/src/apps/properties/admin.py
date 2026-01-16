@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Property, PropertyImage, PropertyFloorPlan
+from .models import Property, PropertyImage, PropertyFloorPlan, SavedProperty
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -13,6 +13,14 @@ class PropertyFloorPlanInline(admin.TabularInline):
     extra = 1
     verbose_name = "Floor Plan"
     verbose_name_plural = "Floor Plans (Multiple)"
+
+@admin.register(SavedProperty)
+class SavedPropertyAdmin(admin.ModelAdmin):
+    list_display = ['user', 'property', 'saved_at']
+    list_filter = ['saved_at']
+    search_fields = ['user__email', 'property__title']
+    readonly_fields = ['saved_at']
+    date_hierarchy = 'saved_at'
 
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):

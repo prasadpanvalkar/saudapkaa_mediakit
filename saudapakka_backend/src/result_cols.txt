@@ -1,0 +1,21 @@
+Columns with No Default and Not Null:
+Name: total_price, Type: numeric
+Name: maintenance_charges, Type: numeric
+Name: age_of_construction, Type: integer
+Name: created_at, Type: timestamp with time zone
+Name: owner_id, Type: uuid
+Name: id, Type: uuid
+Name: title, Type: character varying
+Name: property_type, Type: character varying
+Name: listed_by, Type: character varying
+Name: maintenance_interval, Type: character varying
+Name: project_name, Type: character varying
+Name: address_line, Type: text
+Name: locality, Type: character varying
+Name: city, Type: character varying
+Name: pincode, Type: character varying
+Name: verification_status, Type: character varying
+Name: area_unit, Type: character varying
+Name: landmarks, Type: text
+Name: state, Type: character varying
+Name: availability_status, Type: character varying

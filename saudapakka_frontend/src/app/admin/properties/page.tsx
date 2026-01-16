@@ -210,7 +210,7 @@ export default function AdminPropertiesPage() {
                                                 >
                                                     Verify
                                                 </button>
-                                                <Link href={`/admin/properties/${p.id}/edit`} className="text-gray-400 hover:text-blue-600">
+                                                <Link href={`/admin/properties/edit/${p.id}`} className="text-gray-400 hover:text-blue-600">
                                                     <PencilSquareIcon className="w-5 h-5" />
                                                 </Link>
                                                 <button onClick={() => handleDelete(p.id)} className="text-gray-400 hover:text-red-600">

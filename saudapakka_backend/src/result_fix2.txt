@@ -1,0 +1,3 @@
+FAILURE: null value in column "has_single_gate_entry" of relation "properties_property" violates not-null constraint
+DETAIL:  Failing row contains (f5ffbd66-aa3c-45b7-9dba-74b0ffeb5f77, Test Plot Null Check, PLOT, null, null, null, null, null, 1500.00, null, 5000000.00, null, 0.00, MONTHLY, Test Project, Test Plot Addr, Test Locality, Test City, 123456, null, null, Near Landmark, null, null, null, READY, null, 0, f, f, f, f, f, f, f, f, f, f, f, f, null, , OWNER, null, PENDING, 2026-01-15 11:50:39.584601+00, 332a346a-3323-48d7-a0c5-82cdbf2b7210, SALE, null, RES_PLOT_GUNTHEWARI, , , , , , , , , , , , f, t, f, f, null, f, f, f, null, null, f).
+

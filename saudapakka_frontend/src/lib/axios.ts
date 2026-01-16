@@ -28,6 +28,7 @@ api.interceptors.request.use((config) => {
       }
     }
   }
+  console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`);
   return config;
 });
 
@@ -50,7 +51,10 @@ const processQueue = (error: any, token: string | null = null) => {
 
 // Add response interceptor to handle 401 globally
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(`[API Response] ${response.config.url} - ${response.status}`);
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
 
