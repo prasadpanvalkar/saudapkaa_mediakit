@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8005',
 });
 
 // Public endpoints that should NOT send Authorization headers
@@ -30,7 +30,7 @@ api.interceptors.request.use((config) => {
       }
     }
   }
-return config;
+  return config;
 });
 
 // Add response interceptor to handle 401 globally
@@ -53,7 +53,7 @@ const processQueue = (error: any, token: string | null = null) => {
 // Add response interceptor to handle 401 globally
 api.interceptors.response.use(
   (response) => {
-return response;
+    return response;
   },
   async (error) => {
     const originalRequest = error.config;
@@ -102,7 +102,7 @@ return response;
 
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/token/refresh/`,
+          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8005'}/api/auth/token/refresh/`,
           { refresh: refreshToken }
         );
 

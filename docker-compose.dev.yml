@@ -10,21 +10,21 @@ services:
       - "CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://localhost:8000,http://localhost:3010,http://127.0.0.1:3010,http://localhost:8005,http://127.0.0.1:8005"
       - "CSRF_TRUSTED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://localhost:8000,http://localhost:3010,http://127.0.0.1:3010,http://localhost:8005,http://127.0.0.1:8005"
       # Inherited/Restored from base config because list overrides replace entire list
-      - POSTGRES_HOST=saudapakka_stable_postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=saudapakka_db
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=Saudapakka-8055-Db@
-      - EMAIL_HOST=smtp.gmail.com
-      - EMAIL_PORT=587
-      - EMAIL_USE_TLS=true
-      - EMAIL_HOST_USER=qutubahmad3@gmail.com
-      - EMAIL_HOST_PASSWORD=zpjkdugjokwjoicg
-      - DEFAULT_FROM_EMAIL=SaudaPakka <qutubahmad3@gmail.com>
-      - SANDBOX_API_KEY=key_live_9d0262d5524447b8b3b804a42481408f
-      - SANDBOX_API_SECRET=secret_live_435d5ad9adfc4cce986a47a8d3af5d56
-      - SANDBOX_BASE_URL=https://api.sandbox.co.in
-      - SANDBOX_ENV=production
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - SANDBOX_API_KEY=${SANDBOX_API_KEY}
+      - SANDBOX_API_SECRET=${SANDBOX_API_SECRET}
+      - SANDBOX_BASE_URL=${SANDBOX_BASE_URL}
+      - SANDBOX_ENV=${SANDBOX_ENV}
     volumes:
       - ./saudapakka_backend/src:/app
     ports:
@@ -41,11 +41,12 @@ services:
         python manage.py runserver 0.0.0.0:8000
 
   frontend:
+    user: root
     # Use sh -c to ensure commands are run in a shell, allowing npm install before dev server
     command: sh -c "npm install && npm run dev"
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:8005
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     volumes:
       - ./saudapakka_frontend:/app
       - /app/node_modules
@@ -55,4 +56,4 @@ services:
 
   postgres:
     ports:
-      - "5432:5432"  # Expose standard port for local DB tools if needed
+      - "5432:5432" # Expose standard port for local DB tools if needed

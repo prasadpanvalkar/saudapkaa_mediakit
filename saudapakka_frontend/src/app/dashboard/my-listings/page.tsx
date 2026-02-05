@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import api from "@/lib/axios";
-import { Plus, Home, Heart, Edit, Trash2, Eye, AlertCircle, Loader2 } from "lucide-react";
+import { Plus, Home, Heart, Edit, Trash2, Eye, AlertCircle, Loader2, Share2 } from "lucide-react";
 import PropertyCard from "@/components/listings/property-card";
 
 export default function MyListingsPage() {
@@ -216,6 +216,13 @@ export default function MyListingsPage() {
                     {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(property.total_price))}
                   </p>
                   <div className="flex gap-2">
+                    <Link
+                      href={`/dashboard/my-listings/${property.id}/marketing`}
+                      className="px-3 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 flex items-center justify-center"
+                      title="Create Marketing Kit"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </Link>
                     <Link
                       href={`/dashboard/my-listings/edit/${property.id}`}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"

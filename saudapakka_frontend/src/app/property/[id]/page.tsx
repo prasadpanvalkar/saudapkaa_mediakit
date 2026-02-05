@@ -386,8 +386,15 @@ export default function PropertyDetailsPage() {
             <Button variant="ghost" onClick={() => router.back()} className="-ml-2 hover:bg-gray-100">
               <ArrowLeft className="w-5 h-5 mr-2" /> Back to Search
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setShowShareModal(true)}>
-              <Share2 className="w-4 h-4 mr-2" /> Share
+            <Button variant="outline" size="sm" onClick={() => {
+              // If owner, go to Marketing Kit
+              if (user && property && user.id === property.owner_details?.id) {
+                router.push(`/dashboard/my-listings/${property.id}/marketing`);
+              } else {
+                setShowShareModal(true);
+              }
+            }}>
+              <Share2 className="w-4 h-4 mr-2" /> {user && property && user.id === property.owner_details?.id ? "Create Marketing Kit" : "Share"}
             </Button>
           </div>
 

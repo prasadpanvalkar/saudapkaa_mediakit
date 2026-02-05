@@ -4,15 +4,15 @@ services:
     container_name: saudapakka_stable_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: saudapakka_db
-      POSTGRES_USER: hello_django
-      POSTGRES_PASSWORD: Saudapakka-8055-Db@
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - saudapakka_postgres_data:/var/lib/postgresql/data  # ✅ DB SAFE
+      - saudapakka_postgres_data:/var/lib/postgresql/data # ✅ DB SAFE
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U hello_django -d saudapakka_db"]
+      test: [ "CMD-SHELL", "pg_isready -U hello_django -d saudapakka_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,33 +24,32 @@ services:
 
     volumes:
       - ./saudapakka_backend/src:/app/src
-      - ./saudapakka_backend/media:/app/media  # ✅ Host media sync
+      - ./saudapakka_backend/media:/app/media # ✅ Host media sync
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      - POSTGRES_HOST=saudapakka_stable_postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=saudapakka_db
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=Saudapakka-8055-Db@
-      - EMAIL_HOST=smtp.gmail.com
-      - EMAIL_PORT=587
-      - EMAIL_USE_TLS=true
-      - EMAIL_HOST_USER=qutubahmad3@gmail.com
-      - EMAIL_HOST_PASSWORD=zpjkdugjokwjoicg
-      - DEFAULT_FROM_EMAIL=SaudaPakka <qutubahmad3@gmail.com>
-      - SANDBOX_API_KEY=key_live_9d0262d5524447b8b3b804a42481408f
-      - SANDBOX_API_SECRET=secret_live_435d5ad9adfc4cce986a47a8d3af5d56
-      - SANDBOX_BASE_URL=https://api.sandbox.co.in
-      - SANDBOX_ENV=production
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - SANDBOX_API_KEY=${SANDBOX_API_KEY}
+      - SANDBOX_API_SECRET=${SANDBOX_API_SECRET}
+      - SANDBOX_BASE_URL=${SANDBOX_BASE_URL}
+      - SANDBOX_ENV=${SANDBOX_ENV}
     working_dir: /app
 
   frontend:
     build: ./saudapakka_frontend
     container_name: saudapakka_frontend
     restart: unless-stopped
-
 
   nginx:
     image: nginx:alpine
@@ -63,7 +62,7 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      - ./saudapakka_backend/media:/app/media  # ✅ Nginx serves images
+      - ./saudapakka_backend/media:/app/media # ✅ Nginx serves images
     depends_on:
       - backend
       - frontend
@@ -76,4 +75,4 @@ services:
       - ./certbot/www:/var/www/certbot
 
 volumes:
-  saudapakka_postgres_data:  # ✅ Database safe forever
+  saudapakka_postgres_data: # ✅ Database safe forever

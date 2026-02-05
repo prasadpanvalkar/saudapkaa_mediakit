@@ -31,7 +31,7 @@ export const waitForGoogleMaps = (timeoutMs = 10000): Promise<void> => {
 
 // Singleton getters for services
 let geocoder: google.maps.Geocoder | null = null;
-let placesService: google.maps.places.PlacesService | null = null;
+// let placesService: google.maps.places.PlacesService | null = null;
 let sessionToken: google.maps.places.AutocompleteSessionToken | null = null;
 
 export const getGeocoder = async (): Promise<google.maps.Geocoder> => {
