@@ -1,399 +1,588 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import * as fabric from 'fabric';
-import { MarketingTemplate, TEMPLATES } from './templates'; // Import TEMPLATES for restoration
-import { Download, Share2, RefreshCw } from 'lucide-react';
-import { saveCustomization, loadCustomization } from './utils/localStorage';
-
-interface PropertyData {
-    title: string;
-    price: string;
-    location: string;
-    contact?: string;
-    images: string[];
-}
+import React, { useRef, useState, useEffect } from 'react';
+import { toBlob } from 'html-to-image';
+import { Download, Share2, LayoutTemplate, Check, Loader2, AlertCircle, Image as ImageIcon } from 'lucide-react';
+import { RichTemplate } from './RichTemplate';
 
 interface MarketingCanvasProps {
-    template: MarketingTemplate;
-    data: PropertyData;
-    propertyId: string;
-    onTemplateChange?: (template: MarketingTemplate) => void;
+    property: any;
 }
 
-export default function MarketingCanvas({ template, data, propertyId, onTemplateChange }: MarketingCanvasProps) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [imageLoading, setImageLoading] = useState(false);
-    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+const TEMPLATE_STYLES = [
+    { id: 'urgent', name: 'Urgent Sale', color: '#DC143C', icon: '🔥' },
+    { id: 'premium', name: 'Premium', color: '#10B981', icon: '✨' },
+    { id: 'modern', name: 'Modern', color: '#3B82F6', icon: '🏙️' },
+    { id: 'luxury', name: 'Luxury', color: '#F59E0B', icon: '👑' },
+    { id: 'clean', name: 'Clean', color: '#6B7280', icon: '⚪' },
+] as const;
 
-    // Show toast helper
-    const showToast = (message: string, type: 'success' | 'error') => {
-        setToast({ message, type });
-        setTimeout(() => setToast(null), 3000);
-    };
+export default function MarketingCanvas({ property }: MarketingCanvasProps) {
+    const templateRef = useRef<HTMLDivElement>(null);
+    const [selectedStyle, setSelectedStyle] = useState<typeof TEMPLATE_STYLES[number]['id']>('urgent');
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [imagesLoaded, setImagesLoaded] = useState(false);
 
-    // --- Persistence: Load ---
+    // Preload images
     useEffect(() => {
-        if (!propertyId) return;
-        const saved = loadCustomization(propertyId);
-        if (saved && saved.templateId && onTemplateChange) {
-            const savedTemplate = TEMPLATES.find(t => t.id === saved.templateId);
-            if (savedTemplate && savedTemplate.id !== template.id) {
-                onTemplateChange(savedTemplate);
+        const preloadImages = async () => {
+            setImagesLoaded(false);
+            const images = property?.images || [];
+
+            if (images.length === 0) {
+                setImagesLoaded(true);
+                return;
             }
-        }
-    }, [propertyId]); // Run once on mount per property
 
-    // --- Persistence: Save ---
-    useEffect(() => {
-        if (!propertyId || !template) return;
-        saveCustomization(propertyId, {
-            templateId: template.id
-        });
-    }, [template, propertyId]);
-
-    // --- Initialize Canvas ---
-    useEffect(() => {
-        if (!canvasRef.current) return;
-
-        const canvas = new fabric.Canvas(canvasRef.current, {
-            width: 500,
-            height: 500,
-            backgroundColor: '#f3f4f6',
-        });
-
-        // Scale: 500px preview / 1080px actual
-        const scale = 500 / 1080;
-        canvas.setZoom(scale);
-
-        setFabricCanvas(canvas);
-
-        return () => {
-            canvas.dispose();
+            try {
+                const imageUrls = images.slice(0, 3).map((img: any) => img.image || img);
+                await Promise.all(
+                    imageUrls.map((url: string) => {
+                        return new Promise((resolve) => {
+                            const img = new Image();
+                            img.crossOrigin = 'anonymous';
+                            img.onload = resolve;
+                            img.onerror = resolve;
+                            img.src = url;
+                        });
+                    })
+                );
+                setImagesLoaded(true);
+            } catch (err) {
+                console.error('Image preload error:', err);
+                setImagesLoaded(true);
+            }
         };
-    }, []);
 
-    // --- Helper: Load Image with CORS Fallback ---
-    const loadPropertyImage = async (imageUrl: string): Promise<HTMLImageElement> => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.crossOrigin = 'anonymous'; // Try CORS first
+        preloadImages();
+    }, [property?.images, selectedStyle]);
 
-            img.onload = () => resolve(img);
+    const generateImage = async (): Promise<Blob | null> => {
+        if (!templateRef.current) {
+            setError('Template not ready');
+            return null;
+        }
 
-            img.onerror = () => {
-                console.warn('CORS failed for:', imageUrl, 'Retrying without CORS...');
-                // Fallback: Try without crossOrigin (tainted canvas, export might fail but display works)
-                // Note: If export logic uses toDataURL, it WILL fail with tainted canvas.
-                // But at least the user sees the image.
-                const fallbackImg = new Image();
-                fallbackImg.onload = () => resolve(fallbackImg);
-                fallbackImg.onerror = () => reject(new Error('Failed to load image'));
-                fallbackImg.src = imageUrl;
+        setIsGenerating(true);
+        setError(null);
+
+        try {
+            const element = templateRef.current;
+
+            // Store and remove transforms
+            const originalStyles = {
+                transform: element.style.transform,
+                transition: element.style.transition,
+                animation: element.style.animation,
             };
 
-            img.src = imageUrl;
-        });
-    };
+            element.style.transform = 'none';
+            element.style.transition = 'none';
+            element.style.animation = 'none';
 
-    // --- Helper: Format Price ---
-    const formatPrice = (price: number | string): string => {
-        const numPrice = typeof price === 'string' ? parseFloat(price) : price;
-        if (!numPrice || isNaN(numPrice)) return 'Price On Request';
-        if (numPrice >= 10000000) { // 1 Crore+
-            return `₹${(numPrice / 10000000).toFixed(2)} Cr`;
-        } else if (numPrice >= 100000) { // 1 Lakh+
-            return `₹${(numPrice / 100000).toFixed(2)} L`;
-        } else {
-            return `₹${numPrice.toLocaleString('en-IN')}`;
+            // Wait for fonts and renders
+            await document.fonts.ready;
+            await new Promise(resolve => setTimeout(resolve, 600));
+
+            console.log('📸 Starting capture with html-to-image...');
+
+            const blob = await toBlob(element, {
+                pixelRatio: 2,
+                backgroundColor: '#f5f5f5',
+                cacheBust: true,
+                style: {
+                    transform: 'none',
+                    transition: 'none',
+                    animation: 'none'
+                }
+            });
+
+            // Restore original styles
+            element.style.transform = originalStyles.transform;
+            element.style.transition = originalStyles.transition;
+            element.style.animation = originalStyles.animation;
+
+            if (blob) {
+                console.log('✅ Blob created:', blob.size, 'bytes');
+                return blob;
+            } else {
+                console.error('❌ Failed to create blob');
+                setError('Failed to generate image');
+                return null;
+            }
+        } catch (err) {
+            console.error('❌ Image generation error:', err);
+            setError(err instanceof Error ? err.message : 'Failed to generate image');
+            return null;
+        } finally {
+            setIsGenerating(false);
         }
     };
 
-    // --- Render Canvas ---
-    useEffect(() => {
-        if (!fabricCanvas) return;
 
-        const loadTemplate = async () => {
-            setLoading(true);
-            try {
-                fabricCanvas.clear();
-                fabricCanvas.backgroundColor = template.canvas.backgroundColor;
 
-                // Sort objects so we draw in order
-                for (const obj of template.objects) {
-                    if (obj.type === 'image') {
-                        // This is the property image slot
-                        const imageUrl = data.images[currentImageIndex] || '/placeholder.jpg';
-                        if (imageUrl) {
-                            try {
-                                const imgElement = await loadPropertyImage(imageUrl);
-                                const fImg = new fabric.Image(imgElement);
+    const handleDownload = async () => {
+        const blob = await generateImage();
+        if (!blob) {
+            setError('Failed to generate image. Please try again.');
+            return;
+        }
 
-                                // Fit logic based on obj dimensions
-                                if (obj.width && obj.height) {
-                                    const scaleX = obj.width / fImg.width!;
-                                    const scaleY = obj.height / fImg.height!;
-                                    const scale = Math.max(scaleX, scaleY);
-                                    fImg.scale(scale);
-
-                                    fImg.set({
-                                        left: obj.left + (obj.width / 2),
-                                        top: obj.top + (obj.height / 2),
-                                        originX: 'center',
-                                        originY: 'center',
-                                        opacity: obj.opacity || 1
-                                    });
-
-                                    // Clip to rect if needed (basic implementation)
-                                    // For now relying on order / overlay
-                                } else {
-                                    fImg.set({
-                                        left: obj.left,
-                                        top: obj.top,
-                                        opacity: obj.opacity || 1
-                                    });
-                                }
-
-                                fImg.set({
-                                    selectable: false,
-                                    evented: false,
-                                    angle: obj.angle || 0
-                                });
-
-                                fabricCanvas.add(fImg);
-                                fabricCanvas.sendObjectToBack(fImg);
-                            } catch (e) {
-                                console.error("Failed to load image", e);
-                            }
-                        }
-                    } else if (obj.type === 'text') {
-                        let textContent = obj.text || '';
-
-                        // Replace placeholders with actual data
-                        // Handle price formatting
-                        if (textContent.includes('{{price}}')) {
-                            textContent = textContent.replace('{{price}}', formatPrice(data.price));
-                        }
-
-                        textContent = textContent
-                            .replace('{{title}}', data.title || 'Property Title')
-                            .replace('{{address}}', data.location || '')
-                            .replace('{{contact}}', data.contact || '+91 98765 43210');
-
-                        const textOptions: any = {
-                            left: obj.left,
-                            top: obj.top,
-                            fontSize: obj.fontSize,
-                            fontFamily: obj.fontFamily,
-                            fill: obj.fill,
-                            fontWeight: obj.fontWeight as string | number, // Cast for Fabric
-                            textAlign: (obj.textAlign || 'left') as any,
-                            originX: (obj.originX || 'left') as fabric.TOriginX,
-                            originY: (obj.originY || 'top') as fabric.TOriginY,
-                            width: obj.width || 600,
-                            angle: obj.angle || 0,
-                            editable: obj.id !== 'watermark',
-                            selectable: obj.id !== 'watermark'
-                        };
-
-                        // Add shadow if specified
-                        if (obj.shadow) {
-                            textOptions.shadow = new fabric.Shadow({
-                                color: obj.shadow.color,
-                                blur: obj.shadow.blur,
-                                offsetX: obj.shadow.offsetX,
-                                offsetY: obj.shadow.offsetY
-                            });
-                        }
-
-                        // Add stroke if specified
-                        if (obj.stroke) {
-                            textOptions.stroke = obj.stroke;
-                            textOptions.strokeWidth = obj.strokeWidth || 1;
-                        }
-
-                        const text = new fabric.Textbox(textContent, textOptions);
-                        fabricCanvas.add(text);
-                    } else if (obj.type === 'rect') {
-                        const rectOptions: any = {
-                            left: obj.left,
-                            top: obj.top,
-                            width: obj.width,
-                            height: obj.height,
-                            fill: obj.fill,
-                            opacity: obj.opacity || 1,
-                            selectable: false,
-                            evented: false,
-                            angle: obj.angle || 0
-                        };
-
-                        // Add shadow if specified
-                        if (obj.shadow) {
-                            rectOptions.shadow = new fabric.Shadow({
-                                color: obj.shadow.color,
-                                blur: obj.shadow.blur,
-                                offsetX: obj.shadow.offsetX,
-                                offsetY: obj.shadow.offsetY
-                            });
-                        }
-                        if (obj.stroke) {
-                            rectOptions.stroke = obj.stroke;
-                            rectOptions.strokeWidth = obj.strokeWidth || 1;
-                        }
-
-                        const rect = new fabric.Rect(rectOptions);
-                        fabricCanvas.add(rect);
-                    } else if (obj.type === 'circle') { // Add support for Circle
-                        const circleOptions: any = {
-                            left: obj.left,
-                            top: obj.top,
-                            radius: obj.radius,
-                            fill: obj.fill,
-                            opacity: obj.opacity || 1,
-                            selectable: false,
-                            evented: false,
-                            angle: obj.angle || 0
-                        };
-
-                        if (obj.shadow) {
-                            circleOptions.shadow = new fabric.Shadow({
-                                color: obj.shadow.color,
-                                blur: obj.shadow.blur,
-                                offsetX: obj.shadow.offsetX,
-                                offsetY: obj.shadow.offsetY
-                            });
-                        }
-
-                        const circle = new fabric.Circle(circleOptions);
-                        fabricCanvas.add(circle);
-                    }
-                }
-
-                // Watermark handled in template now, removed hardcoded one
-
-                fabricCanvas.renderAll();
-            } finally {
-                setLoading(false);
-                setImageLoading(false);
-            }
-        };
-
-        loadTemplate();
-
-    }, [fabricCanvas, template, currentImageIndex, data]);
-
-    // --- Actions ---
-
-    const handleImageSwap = () => {
-        if (!data.images || data.images.length <= 1) return;
-        setImageLoading(true);
-        setCurrentImageIndex((prev) => (prev + 1) % data.images.length);
-    };
-
-    const handleDownload = () => {
-        if (!fabricCanvas) return;
         try {
-            const dataURL = fabricCanvas.toDataURL({
-                format: 'jpeg',
-                quality: 0.9,
-                multiplier: 1080 / 500
-            });
-
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = `property-${data.title.slice(0, 10)}.jpg`;
+            const filename = `saudapakka_${property.title?.replace(/[^a-z0-9]/gi, '-') || 'property'}_${selectedStyle}_${Date.now()}.jpg`;
+            link.href = url;
+            link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
 
-            showToast('Image downloaded successfully!', 'success');
+            console.log('✅ Download complete:', filename);
         } catch (err) {
-            console.error("Download failed", err);
-            showToast('Download failed. Check console.', 'error');
+            console.error('❌ Download error:', err);
+            setError('Download failed. Please try again.');
         }
     };
 
     const handleShare = async () => {
-        if (!fabricCanvas) return;
+        if (!navigator.share) {
+            setError('Sharing not supported on this device. Downloading instead...');
+            await handleDownload();
+            return;
+        }
+
+        const blob = await generateImage();
+        if (!blob) {
+            setError('Failed to generate image for sharing');
+            return;
+        }
+
         try {
-            const dataURL = fabricCanvas.toDataURL({
-                format: 'jpeg',
-                quality: 0.9,
-                multiplier: 1080 / 500
+            const file = new File([blob], `saudapakka-property.jpg`, { type: 'image/jpeg' });
+
+            await navigator.share({
+                files: [file],
+                title: property.title || 'Property for Sale',
+                text: `Check out this property: ${property.title || 'Premium Property'} in ${property.locality || property.city || 'Prime Location'}\n\nVisit Saudapakka.com for more details!`,
             });
 
-            const blob = await (await fetch(dataURL)).blob();
-            const file = new File([blob], 'listing.jpg', { type: 'image/jpeg' });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: data.title,
-                    text: `Check out this property: ${data.title} - ${data.price}`
-                });
-                showToast('Shared successfully!', 'success');
-            } else {
-                showToast('Sharing not supported on this device', 'error');
+            console.log('✅ Share successful');
+        } catch (err: any) {
+            if (err.name === 'AbortError') {
+                console.log('ℹ️ Share cancelled by user');
+                return;
             }
-        } catch (err) {
-            console.error("Share failed", err);
-            showToast('Share failed. Please download instead.', 'error');
+            console.error('❌ Share error:', err);
+            setError('Share failed. Downloading instead...');
+            await handleDownload();
         }
     };
 
+    const currentTemplate = TEMPLATE_STYLES.find(t => t.id === selectedStyle);
+
     return (
-        <div className="flex flex-col gap-4">
-            {/* Editor Toolbar */}
-            <div className="flex justify-between items-center p-2 bg-white rounded shadow-sm">
-                <button
-                    onClick={handleImageSwap}
-                    disabled={imageLoading || !data.images || data.images.length <= 1}
-                    className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded text-gray-700 disabled:opacity-50"
-                >
-                    {imageLoading ? (
-                        <>
-                            <RefreshCw size={16} className="animate-spin" /> Swap...
-                        </>
-                    ) : (
-                        <>
-                            <RefreshCw size={16} /> Swap Image ({currentImageIndex + 1}/{data.images.length})
-                        </>
-                    )}
-                </button>
-            </div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            background: 'linear-gradient(to bottom right, #F9FAFB, #E5E7EB)',
+            fontFamily: 'Arial, Helvetica, sans-serif'
+        }}>
+            {/* Toolbar */}
+            <div style={{
+                backgroundColor: '#FFFFFF',
+                borderBottom: '1px solid #E5E7EB',
+                padding: '16px 24px',
+                position: 'sticky',
+                top: 0,
+                zIndex: 20,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+            }}>
+                <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '16px'
+                }}>
 
-            {/* Canvas Area */}
-            <div className="relative border rounded shadow-lg overflow-hidden bg-gray-50 flex justify-center items-center">
-                <canvas ref={canvasRef} width={500} height={500} className="max-w-full" />
-                {loading && <div className="absolute inset-0 flex items-center justify-center bg-white/75 z-10">Loading Template...</div>}
-            </div>
+                    {/* Template Selector */}
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        overflowX: 'auto',
+                        paddingBottom: '8px'
+                    }}>
+                        <LayoutTemplate
+                            style={{
+                                color: '#9CA3AF',
+                                marginRight: '8px',
+                                flexShrink: 0
+                            }}
+                            size={20}
+                        />
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            {TEMPLATE_STYLES.map((style) => (
+                                <button
+                                    key={style.id}
+                                    onClick={() => {
+                                        setSelectedStyle(style.id);
+                                        setError(null);
+                                    }}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: '10px 16px',
+                                        borderRadius: '12px',
+                                        fontSize: '14px',
+                                        fontWeight: 600,
+                                        border: selectedStyle === style.id ? 'none' : '2px solid #E5E7EB',
+                                        backgroundColor: selectedStyle === style.id ? '#111827' : '#FFFFFF',
+                                        color: selectedStyle === style.id ? '#FFFFFF' : '#374151',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        boxShadow: selectedStyle === style.id ? '0 4px 14px rgba(0,0,0,0.25)' : '0 1px 2px rgba(0,0,0,0.05)',
+                                        transform: selectedStyle === style.id ? 'scale(1.05)' : 'scale(1)',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (selectedStyle !== style.id) {
+                                            e.currentTarget.style.borderColor = '#9CA3AF';
+                                            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (selectedStyle !== style.id) {
+                                            e.currentTarget.style.borderColor = '#E5E7EB';
+                                            e.currentTarget.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+                                        }
+                                    }}
+                                >
+                                    <span style={{ fontSize: '16px' }}>{style.icon}</span>
+                                    <span>{style.name}</span>
+                                    {selectedStyle === style.id && <Check size={16} style={{ marginLeft: '4px' }} />}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-4">
-                <button
-                    onClick={handleDownload}
-                    className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-800 text-white rounded hover:bg-gray-900 shadow-md transition-colors"
-                >
-                    <Download size={18} /> Download
-                </button>
-                <button
-                    onClick={handleShare}
-                    className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium shadow-md transition-colors"
-                >
-                    <Share2 size={18} /> Share
-                </button>
-            </div>
+                    {/* Action Buttons */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <button
+                            onClick={handleShare}
+                            disabled={isGenerating || !imagesLoaded}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                padding: '10px 16px',
+                                backgroundColor: '#EFF6FF',
+                                color: '#1D4ED8',
+                                borderRadius: '12px',
+                                fontWeight: 600,
+                                border: 'none',
+                                cursor: (isGenerating || !imagesLoaded) ? 'not-allowed' : 'pointer',
+                                opacity: (isGenerating || !imagesLoaded) ? 0.5 : 1,
+                                transition: 'all 0.2s',
+                                fontSize: '14px'
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!isGenerating && imagesLoaded) {
+                                    e.currentTarget.style.backgroundColor = '#DBEAFE';
+                                    e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#EFF6FF';
+                                e.currentTarget.style.boxShadow = 'none';
+                            }}
+                        >
+                            {isGenerating ? <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> : <Share2 size={18} />}
+                            <span>Share</span>
+                        </button>
 
-            {/* Toast Notification */}
-            {toast && (
-                <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-xl z-50 font-medium text-sm animate-fade-in-up ${toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-500 text-white'
-                    }`}>
-                    {toast.message}
+                        <button
+                            onClick={handleDownload}
+                            disabled={isGenerating || !imagesLoaded}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                padding: '10px 20px',
+                                backgroundColor: '#111827',
+                                color: '#FFFFFF',
+                                borderRadius: '12px',
+                                fontWeight: 600,
+                                border: 'none',
+                                cursor: (isGenerating || !imagesLoaded) ? 'not-allowed' : 'pointer',
+                                opacity: (isGenerating || !imagesLoaded) ? 0.5 : 1,
+                                boxShadow: '0 4px 6px rgba(0,0,0,0.2)',
+                                transition: 'all 0.2s',
+                                fontSize: '14px'
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!isGenerating && imagesLoaded) {
+                                    e.currentTarget.style.backgroundColor = '#000000';
+                                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3)';
+                                    e.currentTarget.style.transform = 'scale(1.05)';
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#111827';
+                                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.2)';
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
+                            {isGenerating ? (
+                                <>
+                                    <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                                    <span>Generating...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <Download size={18} />
+                                    <span>Download</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </div>
-            )}
+
+                {/* Error Banner */}
+                {error && (
+                    <div style={{
+                        marginTop: '12px',
+                        padding: '12px',
+                        backgroundColor: '#FEF2F2',
+                        border: '1px solid #FCA5A5',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        color: '#991B1B',
+                        fontSize: '14px'
+                    }}>
+                        <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                        <span style={{ flex: 1 }}>{error}</span>
+                        <button
+                            onClick={() => setError(null)}
+                            style={{
+                                marginLeft: 'auto',
+                                color: '#DC2626',
+                                fontWeight: 600,
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px'
+                            }}
+                        >
+                            Dismiss
+                        </button>
+                    </div>
+                )}
+
+                {/* Loading Images Indicator */}
+                {!imagesLoaded && (
+                    <div style={{
+                        marginTop: '12px',
+                        padding: '12px',
+                        backgroundColor: '#EFF6FF',
+                        border: '1px solid #93C5FD',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        color: '#1E40AF',
+                        fontSize: '14px'
+                    }}>
+                        <Loader2 size={18} style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />
+                        <span>Loading property images...</span>
+                    </div>
+                )}
+            </div>
+
+            {/* Preview Area */}
+            <div style={{
+                flex: 1,
+                overflow: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '32px',
+                position: 'relative'
+            }}>
+                <div style={{ position: 'relative' }}>
+                    {/* Preview Label */}
+                    <div style={{
+                        position: 'absolute',
+                        top: '-32px',
+                        left: 0,
+                        right: 0,
+                        textAlign: 'center'
+                    }}>
+                        <span style={{
+                            display: 'inline-block',
+                            padding: '6px 16px',
+                            backgroundColor: '#FFFFFF',
+                            borderRadius: '999px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#4B5563',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                            border: '1px solid #E5E7EB'
+                        }}>
+                            {currentTemplate?.icon} {currentTemplate?.name} Template Preview
+                        </span>
+                    </div>
+
+                    {/* Scaled Preview Container */}
+                    <div style={{
+                        position: 'relative',
+                        backgroundColor: '#FFFFFF',
+                        boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        width: '540px',
+                        height: '540px'
+                    }}>
+                        <div
+                            ref={templateRef}
+                            style={{
+                                transform: 'scale(0.5)',
+                                transformOrigin: 'top left',
+                                width: '1080px',
+                                height: '1080px'
+                            }}
+                        >
+                            <RichTemplate
+                                property={property}
+                                templateStyle={selectedStyle}
+                                id="marketing-template"
+                            />
+                        </div>
+
+                        {/* Loading Overlay */}
+                        {isGenerating && (
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundColor: 'rgba(0,0,0,0.5)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backdropFilter: 'blur(4px)',
+                                zIndex: 30
+                            }}>
+                                <div style={{
+                                    backgroundColor: '#FFFFFF',
+                                    borderRadius: '16px',
+                                    padding: '32px',
+                                    boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+                                    textAlign: 'center'
+                                }}>
+                                    <Loader2 size={48} style={{
+                                        animation: 'spin 1s linear infinite',
+                                        marginLeft: 'auto',
+                                        marginRight: 'auto',
+                                        marginBottom: '16px',
+                                        color: '#111827'
+                                    }} />
+                                    <p style={{
+                                        fontSize: '18px',
+                                        fontWeight: 'bold',
+                                        color: '#111827',
+                                        marginBottom: '8px',
+                                        margin: 0
+                                    }}>Generating Image...</p>
+                                    <p style={{
+                                        fontSize: '14px',
+                                        color: '#6B7280',
+                                        margin: '8px 0 0 0'
+                                    }}>This may take a few seconds</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Quality Badge */}
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '-32px',
+                        left: 0,
+                        right: 0,
+                        textAlign: 'center'
+                    }}>
+                        <span style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '6px 16px',
+                            backgroundColor: '#111827',
+                            color: '#FFFFFF',
+                            borderRadius: '999px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'
+                        }}>
+                            <ImageIcon size={14} />
+                            Full Resolution: 1080×1080 (2160×2160 at 2x)
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <div style={{
+                backgroundColor: '#FFFFFF',
+                borderTop: '1px solid #E5E7EB',
+                padding: '16px 24px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '16px',
+                fontSize: '14px',
+                color: '#6B7280'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{
+                        width: '8px',
+                        height: '8px',
+                        backgroundColor: '#10B981',
+                        borderRadius: '50%',
+                        animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    }} />
+                    <span>Preview scaled to 50% • Download for full HD quality</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+                    <span style={{
+                        padding: '4px 12px',
+                        backgroundColor: '#F3F4F6',
+                        borderRadius: '999px',
+                        fontWeight: 500
+                    }}>
+                        📱 Perfect for WhatsApp, Instagram & Facebook
+                    </span>
+                </div>
+            </div>
+
+            {/* Add CSS animation for spin */}
+            <style>{`
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                }
+            `}</style>
         </div>
     );
 }

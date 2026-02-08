@@ -23,11 +23,11 @@ const config: Config = {
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
+                    DEFAULT: "rgb(45, 95, 63)", // #2D5F3F - Forced RGB
                     foreground: "hsl(var(--primary-foreground))",
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
+                    DEFAULT: "rgb(74, 155, 109)", // #4A9B6D - Forced RGB
                     foreground: "hsl(var(--secondary-foreground))",
                 },
                 destructive: {
@@ -77,6 +77,10 @@ const config: Config = {
         },
     },
     plugins: [require("tailwindcss-animate")],
+    // CRITICAL: Disable OKLCH
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
 };
 
 export default config;
