@@ -11,10 +11,11 @@ env = environ.Env(
     DEBUG=(bool, False),
     EMAIL_USE_TLS=(bool, True),
     EMAIL_PORT=(int, 587),
+    
 )
 
 # 2. Read the .env file (Attempt to read, ignore if missing in prod)
-environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR.parent.parent, '.env'))
 
 
 # =============================================================================
@@ -27,7 +28,7 @@ DEBUG = env.bool('DEBUG', default=False)
 
 # Robust definition of ALLOWED_HOSTS
 default_hosts = ['*']
-default_hosts = ['saudapakka.com', 'www.saudapakka.com', 'localhost', '127.0.0.1', 'saudapakka_backend']
+default_hosts = ['saudapakka.com', 'www.saudapakka.com', 'localhost', '127.0.0.1', 'saudapakka_backend', 'backend', 'backend:8000']
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=default_hosts)
 
 
@@ -154,7 +155,7 @@ AUTH_USER_MODEL = 'users.User'
 # EMAIL CONFIGURATION (Safe Parsing)
 # =============================================================================
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend' if not DEBUG else 'django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = env.int('EMAIL_PORT', default=587)
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
@@ -188,7 +189,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1000/hour',
-        'user': '5000/hour'
+        'user': '5000/hour',
+        'otp_request': '5/hour'
     }
 }
 

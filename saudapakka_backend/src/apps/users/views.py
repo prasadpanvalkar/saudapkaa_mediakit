@@ -11,6 +11,7 @@ from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework_simplejwt.tokens import RefreshToken
 
 # Internal App Imports
@@ -28,10 +29,17 @@ logger = logging.getLogger(__name__)
 # This client handles the AWS SigV4 signing to prevent 403/400 errors
 sandbox = SandboxClient()
 
-# --- 1. AUTHENTICATION VIEWS ---
+# --- 1. THROTTLES ---
+class OtpRequestThrottle(AnonRateThrottle):
+    rate = '5/hour'
+    scope = 'otp_request'
+
+# --- 2. AUTHENTICATION VIEWS ---
 
 class SendOtpView(APIView):
     """Generates a 6-digit OTP and sends it via SaudaPakka branded email."""
+    throttle_classes = [OtpRequestThrottle]
+    authentication_classes = []
     permission_classes = [AllowAny]
     
     def post(self, request):
@@ -72,16 +80,20 @@ class SendOtpView(APIView):
         try:
             msg = EmailMultiAlternatives(subject, strip_tags(html_content), settings.DEFAULT_FROM_EMAIL, [email])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            msg.send(fail_silently=False)
             return Response({'message': 'OTP sent successfully'})
         except Exception as e:
-            logger.error(f"Email Error: {e}")
-            return Response({'error': 'Failed to send email'}, status=500)
+            logger.error(f"OTP email send failed: {e}")
+            return Response(
+                {'error': 'Failed to send OTP email. Please try again.'}, 
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
 
 from django.contrib.auth.models import update_last_login
 
 class VerifyOtpView(APIView):
     """Verifies OTP and returns JWT tokens + User details."""
+    authentication_classes = []
     permission_classes = [AllowAny]
     
     def post(self, request):

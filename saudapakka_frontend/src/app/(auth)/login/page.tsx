@@ -11,23 +11,29 @@ import { ArrowLeft, Mail, KeyRound, Loader2, Lock } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const setAuth = useAuth((state) => state.setAuth);
+  const setAuth = useAuth((state: any) => state.setAuth);
 
   const [step, setStep] = useState<"EMAIL" | "OTP">("EMAIL");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [otpError, setOtpError] = useState<string | null>(null);
+  const [otpSuccess, setOtpSuccess] = useState<string | null>(null);
 
   // 1. Send OTP
   const handleSendOtp = async () => {
-    if (!email) return alert("Please enter your email");
+    setOtpError(null);
+    setOtpSuccess(null);
+    if (!email) return setOtpError("Please enter your email");
     setLoading(true);
     try {
       await api.post("/api/auth/login/", { email });
       setStep("OTP");
-    } catch (error) {
-      alert("Error sending OTP. Please check your connection.");
-      console.error(error);
+      setOtpSuccess(`Code sent to ${email}`);
+    } catch (error: any) {
+      const msg = error.response?.data?.error || error.response?.data?.detail || "Error sending OTP. Please check your connection.";
+      setOtpError(msg);
+      console.error("Send OTP Error:", error);
     } finally {
       setLoading(false);
     }
@@ -35,14 +41,17 @@ export default function LoginPage() {
 
   // 1.5 Resend OTP
   const handleResendOtp = async () => {
+    setOtpError(null);
+    setOtpSuccess(null);
     if (!email) return;
     setLoading(true);
     try {
       await api.post("/api/auth/login/", { email });
-      alert(`New OTP sent to ${email}`);
-    } catch (error) {
+      setOtpSuccess(`New OTP sent to ${email}`);
+    } catch (error: any) {
       console.error("Resend Error:", error);
-      alert("Failed to resend OTP. Please try again.");
+      const msg = error.response?.data?.error || error.response?.data?.detail || "Failed to resend OTP. Please try again.";
+      setOtpError(msg);
     } finally {
       setLoading(false);
     }
@@ -50,7 +59,9 @@ export default function LoginPage() {
 
   // 2. Verify OTP
   const handleVerifyOtp = async () => {
-    if (!otp) return alert("Please enter the OTP");
+    setOtpError(null);
+    setOtpSuccess(null);
+    if (!otp) return setOtpError("Please enter the OTP");
     setLoading(true);
     try {
       const res = await api.post("/api/auth/verify/", { email, otp });
@@ -73,9 +84,9 @@ export default function LoginPage() {
       }
 
     } catch (error: any) {
-      console.error("Login Error:", error);
-      const msg = error.response?.data?.detail || "Invalid OTP. Please try again.";
-      alert(msg);
+      console.error("Verify Login Error:", error);
+      const msg = error.response?.data?.error || error.response?.data?.detail || "Invalid OTP. Please try again.";
+      setOtpError(msg);
     } finally {
       setLoading(false);
     }
@@ -127,6 +138,17 @@ export default function LoginPage() {
           {/* Form */}
           <div className="space-y-6">
 
+            {otpError && (
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-100 flex items-center">
+                <span className="font-medium">{otpError}</span>
+              </div>
+            )}
+            {otpSuccess && (
+              <div className="bg-green-50 text-primary-green text-sm p-3 rounded-xl border border-green-100 flex items-center">
+                <span className="font-medium">{otpSuccess}</span>
+              </div>
+            )}
+
             {step === "EMAIL" ? (
               // STEP 1: EMAIL
               <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
@@ -138,8 +160,8 @@ export default function LoginPage() {
                       placeholder="name@example.com"
                       className="pl-11 h-12 rounded-xl border-gray-200 bg-gray-50/50 focus:bg-white focus:border-accent-green focus:ring-4 focus:ring-accent-green/10 transition-all text-base"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                      onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value.toLowerCase())}
+                      onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSendOtp()}
                     />
                   </div>
                 </div>
@@ -162,8 +184,8 @@ export default function LoginPage() {
                     placeholder="Digits Only"
                     className="h-12 text-center rounded-xl border-gray-200 bg-gray-50/50 focus:bg-white focus:border-accent-green focus:ring-4 focus:ring-accent-green/10 transition-all text-2xl font-bold tracking-[0.2em] text-gray-800"
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    onKeyDown={(e) => e.key === "Enter" && handleVerifyOtp()}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOtp(e.target.value.replace(/\D/g, ''))}
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleVerifyOtp()}
                     maxLength={6}
                     autoFocus
                     inputMode="numeric"

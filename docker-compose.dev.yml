@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: saudapakka_dev_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-saudapakka_db}
+      POSTGRES_USER: ${POSTGRES_USER:-hello_django}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Saudapakka-8055-Db@}
+    volumes:
+      - saudapakka_dev_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hello_django} -d ${POSTGRES_DB:-saudapakka_db}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./saudapakka_backend
+      dockerfile: Dockerfile
+    container_name: saudapakka_dev_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./saudapakka_backend/src:/app/src
+      - ./saudapakka_backend/media:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DEBUG=True
+      - PYTHONUNBUFFERED=1
+      - POSTGRES_HOST=postgres
+      - ALLOWED_HOSTS=localhost,127.0.0.1,saudapakka_dev_backend,backend
+      - CORS_ALLOW_ALL_ORIGINS=True
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+    # Override the default entrypoint to run the development server
+    command: >
+      bash -c "python manage.py migrate --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  frontend:
+    build:
+      context: ./saudapakka_frontend
+      dockerfile: Dockerfile.dev
+    container_name: saudapakka_dev_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./saudapakka_frontend:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+
+volumes:
+  saudapakka_dev_postgres_data:

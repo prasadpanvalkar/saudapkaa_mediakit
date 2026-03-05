@@ -15,7 +15,8 @@ import {
   Heart,
   Home,
   UserCircle,
-  Gavel
+  Gavel,
+  Layers
 } from "lucide-react";
 import Link from "next/link";
 import NotificationBell from "@/components/layout/NotificationBell";
@@ -128,8 +129,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     // but we define them here to allow future modification easily.
 
     if (user?.role_category === 'BUILDER') {
-      // Future: Add Builder-specific items here
-      activeNav = BASE_SELLER_NAV;
+      activeNav = [
+        { name: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
+        { name: "My Listings", href: "/dashboard/my-listings", icon: Building2 },
+        { name: "Multi List", href: "/dashboard/multi-list", icon: Layers },
+        { name: "Manage Mandate", href: "/dashboard/mandates", icon: Gavel }
+      ];
     } else if (user?.role_category === 'PLOTTING_AGENCY') {
       // Future: Add Plotting-specific items here
       activeNav = BASE_SELLER_NAV;

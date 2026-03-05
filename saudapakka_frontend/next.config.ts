@@ -4,18 +4,19 @@ const nextConfig: NextConfig = {
   output: 'standalone',
 
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '',
   },
 
   async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://backend:8000';
     return [
       {
         source: '/api/:path*',
-        destination: 'http://saudapakka_backend:8000/api/:path*',
+        destination: `${backendUrl}/api/:path*/`,
       },
       {
         source: '/media/:path*',
-        destination: 'http://saudapakka_backend:8000/media/:path*',
+        destination: `${backendUrl}/media/:path*`,
       },
     ];
   },
