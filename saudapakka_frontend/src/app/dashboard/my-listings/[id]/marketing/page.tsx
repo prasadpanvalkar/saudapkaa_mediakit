@@ -35,6 +35,7 @@ interface User {
   name?: string;
   phone?: string;
   phone_number?: string;
+  is_staff?: boolean;
 }
 // ============================================================================
 // LOADING STATE COMPONENT
@@ -445,6 +446,7 @@ const usePropertyAccess = (id: string | undefined) => {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [redirectPath, setRedirectPath] = useState('/dashboard/my-listings');
   const router = useRouter();
 
   useEffect(() => {
@@ -465,11 +467,15 @@ const usePropertyAccess = (id: string | undefined) => {
         const propertyData = propResponse.data as any; // Cast to any to access nested fields safely if interface is incomplete
         const userData = userResponse.data;
 
-        // Verify ownership
-        if (String(propertyData.owner) !== String(userData.id)) {
-          console.error('Unauthorized: User does not own this property');
+        // Set up the proper return path depending on role
+        const returnPath = userData.is_staff ? '/admin/properties' : '/dashboard/my-listings';
+        setRedirectPath(returnPath);
+
+        // Verify ownership or staff privileges
+        if (String(propertyData.owner) !== String(userData.id) && !userData.is_staff) {
+          console.error('Unauthorized: User does not own this property and is not staff');
           setError('You are not authorized to access this property');
-          setTimeout(() => router.push('/dashboard/my-listings'), 2000);
+          setTimeout(() => router.push(returnPath), 2000);
           return;
         }
 
@@ -498,7 +504,7 @@ const usePropertyAccess = (id: string | undefined) => {
     checkAccess();
   }, [id, router]);
 
-  return { property, loading, authorized, error };
+  return { property, loading, authorized, error, redirectPath };
 };
 
 // ============================================================================
@@ -511,15 +517,15 @@ export default function MarketingPage() {
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   const isMobile = useIsMobile();
-  const { property, loading, authorized, error } = usePropertyAccess(id);
+  const { property, loading, authorized, error, redirectPath } = usePropertyAccess(id);
 
   const handleGoBack = useCallback(() => {
     if (window.history.length > 2) {
       router.back();
     } else {
-      router.push('/dashboard/my-listings');
+      router.push(redirectPath);
     }
-  }, [router]);
+  }, [router, redirectPath]);
 
   // Loading State
   if (loading) {

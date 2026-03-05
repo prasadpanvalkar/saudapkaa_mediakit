@@ -12,7 +12,8 @@ import {
     TrashIcon,
     CheckBadgeIcon,
     XCircleIcon,
-    ClockIcon
+    ClockIcon,
+    ShareIcon
 } from "@heroicons/react/24/outline";
 import PropertyVerificationModal from "@/components/admin/PropertyVerificationModal";
 
@@ -210,6 +211,13 @@ export default function AdminPropertiesPage() {
                                                 >
                                                     Verify
                                                 </button>
+                                                <Link
+                                                    href={`/dashboard/my-listings/${p.id}/marketing`}
+                                                    className="text-purple-600 hover:text-purple-900 font-medium hover:underline decoration-2 underline-offset-2 mr-2 flex flex-row items-center gap-1"
+                                                    title="Media Kit"
+                                                >
+                                                    <ShareIcon className="w-4 h-4" /> Media Kit
+                                                </Link>
                                                 <Link href={`/admin/properties/edit/${p.id}`} className="text-gray-400 hover:text-blue-600">
                                                     <PencilSquareIcon className="w-5 h-5" />
                                                 </Link>
