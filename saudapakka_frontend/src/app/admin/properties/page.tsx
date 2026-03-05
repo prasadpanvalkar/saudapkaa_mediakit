@@ -212,7 +212,7 @@ export default function AdminPropertiesPage() {
                                                     Verify
                                                 </button>
                                                 <Link
-                                                    href={`/dashboard/my-listings/${p.id}/marketing`}
+                                                    href={`/admin/properties/${p.id}/marketing`}
                                                     className="text-purple-600 hover:text-purple-900 font-medium hover:underline decoration-2 underline-offset-2 mr-2 flex flex-row items-center gap-1"
                                                     title="Media Kit"
                                                 >
